@@ -78,12 +78,12 @@ function App() {
 
               <div className="pt-8 space-y-2 text-xs text-gray-400 leading-relaxed">
                 <p className="uppercase tracking-wider">
-                  MODA • CALIDAD • MADE IN BOGOTA • ESTILO •
-                  UNICO • RARO • DIFERENTE • EXPRESION PERSONAL • FOTOGRAFIA
+                  MODA • FOTOGRAFÍA • MADE IN COLOMBIA • SPOTS EN BOGOTÁ •
+                  MODA• FOTOGRAFÍA • HECHO EN COLOMBIA • SPOTS EN BOGOTÁ
                 </p>
                 <p className="uppercase tracking-wider">
-                  MODA • CALIDAD • MADE IN BOGOTA • ESTILO •
-                  UNICO • RARO • DIFERENTE • EXPRESION PERSONAL • FOTOGRAFIA
+                  MODA • FOTOGRAFÍA • MADE IN COLOMBIA • SPOTS EN BOGOTÁ •
+                  MODA• FOTOGRAFÍA • HECHO EN COLOMBIA • SPOTS EN BOGOTÁ
                 </p>
               </div>
             </div>
@@ -154,25 +154,25 @@ function App() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <h4 className="font-bold text-lg mb-4">Annatar</h4>
+              <h4 className="font-bold text-lg mb-4">Sobre Nosotros</h4>
               <p className="text-sm text-gray-400 leading-relaxed">
-                Redefining elegance through timeless design and sustainable craftsmanship.
+                Somos Desarrolladores Colombianos 
               </p>
             </div>
             <div>
               <h5 className="font-semibold mb-4">Products</h5>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition">New Arrivals</a></li>
-                <li><a href="#" className="hover:text-white transition">Best Sellers</a></li>
-                <li><a href="#" className="hover:text-white transition">Collections</a></li>
+                <li><a href="#" className="hover:text-white transition">Spots en Bogotá</a></li>
+                <li><a href="#" className="hover:text-white transition">Mejores Spots</a></li>
+                <li><a href="#" className="hover:text-white transition">Lugares Iconicos</a></li>
               </ul>
             </div>
             <div>
               <h5 className="font-semibold mb-4">Company</h5>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition">About Us</a></li>
+                <li><a href="#" className="hover:text-white transition">Sobre Nosotros</a></li>
                 <li><a href="#" className="hover:text-white transition">Sustainability</a></li>
-                <li><a href="#" className="hover:text-white transition">Contact</a></li>
+                <li><a href="#" className="hover:text-white transition">Contacto</a></li>
               </ul>
             </div>
             <div>
