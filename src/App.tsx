@@ -9,17 +9,20 @@ function App() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-12">
-            <h1 className="text-2xl font-bold tracking-tight">Annatar</h1>
+            <h1 className="text-2xl font-bold tracking-tight">BogoSpots</h1>
 
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#products" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
-                Products
+              <a href="#spots" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
+                Spots
               </a>
-              <a href="#about" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
-                About
+              <a href="#outfits" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
+                Outfits
               </a>
-              <a href="#contact" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
-                Contact
+              <a href="#lugares" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
+                Lugares
+              </a>
+               <a href="#marcas" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
+                Marcas
               </a>
             </div>
           </div>
@@ -57,19 +60,19 @@ function App() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight">
-                Annatar<br />
-                forge<br />
-                elegant
+                Bogotá<br />
+                La capital<br />
+                de la moda 
               </h2>
 
               <p className="text-lg text-gray-600 max-w-md leading-relaxed">
-                Discover timeless pieces that redefine style. High-quality craftsmanship
-                meets modern elegance in our curated collection.
+                Descrubre las mejores ubicaciones para sesiones de fotos de moda en Bogotá. 
+                Desde barrios vibrantes hasta paisajes urbanos icónicos, encuentra el escenario perfecto para tu próxima sesión.
               </p>
 
               <div className="pt-4">
                 <button className="px-8 py-3 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 transition transform hover:scale-105">
-                  Explore Collection
+                  Explorar lugares 
                 </button>
               </div>
 
