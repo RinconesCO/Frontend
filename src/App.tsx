@@ -78,12 +78,12 @@ function App() {
 
               <div className="pt-8 space-y-2 text-xs text-gray-400 leading-relaxed">
                 <p className="uppercase tracking-wider">
-                  CRAFTSMANSHIP • QUALITY • MADE IN EUROPE • SUSTAINABLE •
-                  ECO-FRIENDLY • TIMELESS • DIRECT TO CONSUMER • FREE SHIPPING
+                  MODA • CALIDAD • MADE IN BOGOTA • ESTILO •
+                  UNICO • RARO • DIFERENTE • EXPRESION PERSONAL • FOTOGRAFIA
                 </p>
                 <p className="uppercase tracking-wider">
-                  CRAFTSMANSHIP • QUALITY • MADE IN EUROPE • SUSTAINABLE •
-                  ECO-FRIENDLY • TIMELESS • DIRECT TO CONSUMER • FREE SHIPPING
+                  MODA • CALIDAD • MADE IN BOGOTA • ESTILO •
+                  UNICO • RARO • DIFERENTE • EXPRESION PERSONAL • FOTOGRAFIA
                 </p>
               </div>
             </div>
