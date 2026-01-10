@@ -59,7 +59,7 @@ function App() {
         <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight">
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight font-bebas">
                 Bogotá<br />
                 La capital<br />
                 de la moda 
@@ -89,20 +89,17 @@ function App() {
             </div>
 
             <div className="relative">
-              <div className="relative bg-gradient-to-br from-red-800 to-red-900 rounded-3xl overflow-hidden shadow-2xl aspect-[3/4] flex items-center justify-center">
-                <div className="absolute inset-0 bg-black/20"></div>
+              <div className="relative bg-gradient-to-br from-red-200 to-red-900 rounded-3xl overflow-hidden aspect-[3/4] flex items-center justify-center">
+                <div className="absolute inset-0 "></div>
                 <img
-                  src="https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src="Img1.jpg"
                   alt="Fashion model"
                   className="w-full h-full object-cover opacity-90 mix-blend-multiply"
                 />
               </div>
 
-              <div className="absolute -right-4 top-1/4 bg-white rounded-2xl p-6 shadow-xl transform hover:scale-105 transition">
-                <div className="w-24 h-24 bg-red-900 rounded-full flex items-center justify-center">
-                  <Circle className="w-12 h-12 text-white" fill="currentColor" />
-                </div>
-                <p className="mt-3 text-xs font-medium text-gray-900">Premium Design</p>
+              <div className="absolute -right-4 top-1/4 bg-gray-50 rounded-2xl p-6 transform hover:scale-105 transition">
+              <h3 className="font-bebas text-2xl md:text-3xl">QUE CHIMBA BOGOTÀ</h3>
               </div>
 
               <div className="absolute -right-4 bottom-1/4 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-6 shadow-xl transform hover:scale-105 transition">
