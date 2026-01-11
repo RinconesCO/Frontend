@@ -6,6 +6,8 @@ import MarcaCard from './components/Brands/MarcaCard';
 import { marcasData } from './components/Brands';
 import LugarCard from './components/Places/LugarCard';
 import { lugaresData } from './components/Places';
+import fashionModelImg from './Sources/fashion-model-bogota.jpg';
+import imgInicio from './Sources/imgInicio.jpg';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -54,10 +56,10 @@ function App() {
               </div>
 
               <div className="relative">
-                <div className="relative bg-gradient-to-br from-red-800 to-red-900 rounded-3xl overflow-hidden shadow-2xl aspect-[3/4] flex items-center justify-center">
+                <div className="relative bg-gradient-to-br from-red-400 to-red-900 rounded-3xl overflow-hidden shadow-2xl aspect-[3/4] flex items-center justify-center">
                   <div className="absolute inset-0 bg-black/20"></div>
                   <img
-                    src="https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=800"
+                    src={fashionModelImg}
                     alt="Fashion model"
                     className="w-full h-full object-cover opacity-90 mix-blend-multiply"
                   />
