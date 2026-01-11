@@ -1,11 +1,17 @@
 import { Menu, User, Circle } from 'lucide-react';
 import { useState } from 'react';
+import OutfitCard from './components/Outfits/OutfitCard';
+import { outfitsData } from './components/Outfits';
+import MarcaCard from './components/Brands/MarcaCard';
+import { marcasData } from './components/Brands';
+import LugarCard from './components/Places/LugarCard';
+import { lugaresData } from './components/Places';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [page, setPage] = useState<'home' | 'outfits' | 'lugares' | 'marcas'>('home');
+  const [page, setPage] = useState<'home' | 'outfits' | 'places' | 'brands'>('home');
 
-  const openPage = (p: 'home' | 'outfits' | 'lugares' | 'marcas') => {
+  const openPage = (p: 'home' | 'outfits' | 'places' | 'brands') => {
     setMenuOpen(false);
     setPage(p);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -30,7 +36,7 @@ function App() {
                 </p>
 
                 <div className="pt-4">
-                  <button className="px-8 py-3 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 transition transform hover:scale-105" onClick={() => openPage('lugares')}>
+                  <button className="px-8 py-3 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 transition transform hover:scale-105" onClick={() => openPage('places')}>
                     Explorar lugares 
                   </button>
                 </div>
@@ -115,69 +121,81 @@ function App() {
       return (
         <section className="min-h-[70vh] max-w-7xl mx-auto px-6 py-16">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold">Outfits</h2>
-            <button className="text-sm text-gray-600 hover:text-gray-900" onClick={() => openPage('home')}>Volver</button>
+            <div>
+              <h2 className="text-4xl font-bold mb-2">Outfits</h2>
+              <p className="text-gray-600">Descubre los mejores looks urbanos de Bogotá</p>
+            </div>
+            <button className="text-sm text-gray-600 hover:text-gray-900 font-medium" onClick={() => openPage('home')}>← Volver</button>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-xl transition">
-                <img src={`https://picsum.photos/seed/outfit${i}/800/600`} alt={`Outfit ${i}`} className="w-full h-48 object-cover" />
-                <div className="p-4">
-                  <h3 className="font-semibold">Outfit {i + 1}</h3>
-                  <p className="text-sm text-gray-500">Looks y combinaciones vistas en Bogotá.</p>
-                </div>
-              </div>
+            {outfitsData.map((outfit) => (
+              <OutfitCard
+                key={outfit.id}
+                id={outfit.id}
+                imageUrl={outfit.imageUrl}
+                title={outfit.title}
+                description={outfit.description}
+                tags={outfit.tags}
+              />
             ))}
           </div>
         </section>
       );
     }
 
-    if (page === 'lugares') {
+    if (page === 'places') {
       return (
         <section className="min-h-[70vh] max-w-7xl mx-auto px-6 py-16">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold">Lugares</h2>
-            <button className="text-sm text-gray-600 hover:text-gray-900" onClick={() => openPage('home')}>Volver</button>
+            <div>
+              <h2 className="text-4xl font-bold mb-2">Lugares</h2>
+              <p className="text-gray-600">Los mejores spots de Bogotá para tus sesiones de fotos</p>
+            </div>
+            <button className="text-sm text-gray-600 hover:text-gray-900 font-medium" onClick={() => openPage('home')}>← Volver</button>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-2xl p-6 shadow">
-              <h3 className="font-semibold mb-2">Parque de la 93</h3>
-              <p className="text-sm text-gray-600">Espacio ideal para sesiones al aire libre, cafés y arquitectura moderna.</p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 shadow">
-              <h3 className="font-semibold mb-2">La Candelaria</h3>
-              <p className="text-sm text-gray-600">Calles coloridas y fachadas históricas perfectas para contrastes urbanos.</p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 shadow">
-              <h3 className="font-semibold mb-2">Usaquén</h3>
-              <p className="text-sm text-gray-600">Barrio con plazas y mercados que aportan estética bohemia.</p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 shadow">
-              <h3 className="font-semibold mb-2">Monserrate</h3>
-              <p className="text-sm text-gray-600">Vistas panorámicas de la ciudad para tomas dramáticas.</p>
-            </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {lugaresData.map((lugar) => (
+              <LugarCard
+                key={lugar.id}
+                id={lugar.id}
+                nombre={lugar.nombre}
+                zona={lugar.zona}
+                descripcion={lugar.descripcion}
+                imageUrl={lugar.imageUrl}
+                horario={lugar.horario}
+                caracteristicas={lugar.caracteristicas}
+                mejorHora={lugar.mejorHora}
+              />
+            ))}
           </div>
         </section>
       );
     }
 
-    if (page === 'marcas') {
+    if (page === 'brands') {
       return (
         <section className="min-h-[70vh] max-w-7xl mx-auto px-6 py-16">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold">Marcas</h2>
-            <button className="text-sm text-gray-600 hover:text-gray-900" onClick={() => openPage('home')}>Volver</button>
+            <div>
+              <h2 className="text-4xl font-bold mb-2">Marcas</h2>
+              <p className="text-gray-600">Marcas locales que definen la moda bogotana</p>
+            </div>
+            <button className="text-sm text-gray-600 hover:text-gray-900 font-medium" onClick={() => openPage('home')}>← Volver</button>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {['Local', 'Sostenible', 'Premium', 'Indie', 'Urbana', 'Vintage'].map((m) => (
-              <div key={m} className="bg-white rounded-2xl p-6 shadow hover:shadow-xl transition">
-                <h3 className="font-semibold mb-2">{m}</h3>
-                <p className="text-sm text-gray-500">Descripción breve de la marca {m.toLowerCase()}.</p>
-              </div>
+            {marcasData.map((marca) => (
+              <MarcaCard
+                key={marca.id}
+                id={marca.id}
+                nombre={marca.nombre}
+                categoria={marca.categoria}
+                descripcion={marca.descripcion}
+                ubicacion={marca.ubicacion}
+                destacado={marca.destacado}
+              />
             ))}
           </div>
         </section>
@@ -198,17 +216,17 @@ function App() {
               <button onClick={() => openPage('outfits')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
                 Outfits
               </button>
-              <button onClick={() => openPage('lugares')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
+              <button onClick={() => openPage('places')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
                 Lugares
               </button>
-              <button onClick={() => openPage('marcas')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
+              <button onClick={() => openPage('brands')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
                 Marcas
               </button>
             </div>
           </div>
 
           <div className="flex items-center space-x-4">
-            <button className="hidden md:block px-6 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition" onClick={() => openPage('marcas')}>
+            <button className="hidden md:block px-6 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition" onClick={() => openPage('brands')}>
               Discover more
             </button>
             <button className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition">
@@ -226,9 +244,9 @@ function App() {
         {menuOpen && (
           <div className="md:hidden bg-white border-t border-gray-200 px-6 py-4 space-y-3">
             <button onClick={() => openPage('outfits')} className="block text-sm font-medium text-gray-700 text-left w-full">Outfits</button>
-            <button onClick={() => openPage('lugares')} className="block text-sm font-medium text-gray-700 text-left w-full">Lugares</button>
-            <button onClick={() => openPage('marcas')} className="block text-sm font-medium text-gray-700 text-left w-full">Marcas</button>
-            <button className="w-full px-6 py-2 bg-black text-white text-sm font-medium rounded-full" onClick={() => openPage('marcas')}>
+            <button onClick={() => openPage('places')} className="block text-sm font-medium text-gray-700 text-left w-full">Lugares</button>
+            <button onClick={() => openPage('brands')} className="block text-sm font-medium text-gray-700 text-left w-full">Marcas</button>
+            <button className="w-full px-6 py-2 bg-black text-white text-sm font-medium rounded-full" onClick={() => openPage('brands')}>
               Discover more
             </button>
           </div>
