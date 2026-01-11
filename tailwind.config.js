@@ -2,7 +2,12 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        bebas: ['"Bebas Neue"', 'sans-serif'],
+        oi: ['Oi', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 };
