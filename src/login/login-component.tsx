@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { FiMail, FiLock, FiAtSign, FiUser, FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiMail, FiLock, FiAtSign, FiUser, FiEye, FiEyeOff, FiPhone, FiPower } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { FaInstagram } from 'react-icons/fa';
+import useAuthForm from './useAuthForm';
 
 const backgroundImages = [
   'src/Sources/imgInicio.jpg',
@@ -18,6 +19,27 @@ export default function LoginComponent() {
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [dark, setDark] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    username,
+    setUsername,
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    phone,
+    setPhone,
+    confirmPassword,
+    setConfirmPassword,
+    loading,
+    error,
+    success,
+    handleSubmit,
+  } = useAuthForm(mode, { onRegisterSuccess: () => setMode('login') });
 
   // ✅ DARK MODE REAL (TAILWIND)
   useEffect(() => {
@@ -75,18 +97,55 @@ export default function LoginComponent() {
           </div>
 
           {/* FORM */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
 
-            {/* NOMBRE (REGISTRO) */}
+            {/* CAMPOS (REGISTRO) */}
             {mode === 'register' && (
-              <div className="relative">
-                <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
-                <input
-                  type="text"
-                  placeholder="Nombre completo"
-                  className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
-                />
-              </div>
+              <>
+                <div className="relative">
+                  <FiPower className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                  <input
+                    type="text"
+                    placeholder="Nombre de usuario"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
+                  />
+                </div>
+
+                <div className="relative">
+                  <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                  <input
+                    type="text"
+                    placeholder="Nombre"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
+                  />
+                </div>
+
+                <div className="relative">
+                  <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                  <input
+                    type="text"
+                    placeholder="Apellido"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
+                  />
+                </div>
+
+                <div className="relative">
+                  <FiPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                  <input
+                    type="text"
+                    placeholder="Teléfono (opcional)"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
+                  />
+                </div>
+              </>
             )}
 
             {/* EMAIL */}
@@ -95,6 +154,8 @@ export default function LoginComponent() {
               <input
                 type="email"
                 placeholder="hola@bogospots.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
               />
             </div>
@@ -106,6 +167,8 @@ export default function LoginComponent() {
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-11 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
               />
 
@@ -125,6 +188,8 @@ export default function LoginComponent() {
                 <input
                   type="password"
                   placeholder="Confirmar contraseña"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
                 />
               </div>
@@ -144,8 +209,11 @@ export default function LoginComponent() {
             )}
 
             {/* BOTÓN */}
-            <button className="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 transition hover:scale-[1.02] active:scale-95">
-              {mode === 'login' ? 'Iniciar sesión' : 'Registrarse'}
+            {error && <div className="text-sm text-red-500">{error}</div>}
+            {success && <div className="text-sm text-green-600">{success}</div>}
+
+            <button disabled={loading} className="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 transition hover:scale-[1.02] active:scale-95 disabled:opacity-60">
+              {loading ? 'Procesando...' : (mode === 'login' ? 'Iniciar sesión' : 'Registrarse')}
             </button>
 
             {/* SOCIAL */}
