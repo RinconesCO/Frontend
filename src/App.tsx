@@ -1,5 +1,5 @@
 import { Menu, User, Circle } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import OutfitCard from './components/Outfits/OutfitCard';
 import { outfitsData } from './components/Outfits';
 import MarcaCard from './components/Brands/MarcaCard';
@@ -14,12 +14,34 @@ import LoginComponent from './login/login-component';
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [page, setPage] = useState<'home' | 'outfits' | 'places' | 'brands' | 'login'>('home');
+  const [currentUsername, setCurrentUsername] = useState<string | null>(null);
 
-  const openPage = (p: 'home' | 'outfits' | 'places' | 'brands') => {
+  const openPage = (p: 'login' | 'home' | 'outfits' | 'places' | 'brands') => {
     setMenuOpen(false);
     setPage(p);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('bogospots_username');
+      if (saved) setCurrentUsername(saved);
+    } catch (_) {}
+
+    const handler = (e: any) => {
+      try {
+        const u = e?.detail?.username;
+        if (u) setCurrentUsername(String(u));
+      } catch (_) {}
+    };
+
+    window.addEventListener('bogospots:login', handler as EventListener);
+    window.addEventListener('bogospots:logout', () => setCurrentUsername(null));
+    return () => {
+      window.removeEventListener('bogospots:login', handler as EventListener);
+      window.removeEventListener('bogospots:logout', () => setCurrentUsername(null));
+    };
+  }, []);
 
   const renderPage = () => {
     if (page === 'home') {
@@ -238,10 +260,14 @@ function App() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <button className="hidden md:block px-6 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition" onClick={() => openPage('brands')}>
-              Discover more
-            </button>
-            <button onClick={() => openPage('login')} className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition">
+            {currentUsername && (
+              <button className="hidden md:flex items-center gap-3 px-4 py-2 bg-gray-100 text-gray-800 text-sm font-medium rounded-full transition">
+                <User className="w-4 h-4" />
+                <span className="font-medium">{currentUsername}</span>
+              </button>
+            )}
+
+            <button title="Iniciar sesión" onClick={() => openPage('login')} className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition">
               <User className="w-5 h-5" />
             </button>
             <button
@@ -258,9 +284,12 @@ function App() {
             <button onClick={() => openPage('outfits')} className="block text-sm font-medium text-gray-700 text-left w-full">Outfits</button>
             <button onClick={() => openPage('places')} className="block text-sm font-medium text-gray-700 text-left w-full">Lugares</button>
             <button onClick={() => openPage('brands')} className="block text-sm font-medium text-gray-700 text-left w-full">Marcas</button>
-            <button className="w-full px-6 py-2 bg-black text-white text-sm font-medium rounded-full" onClick={() => openPage('brands')}>
-              Discover more
-            </button>
+            {currentUsername && (
+              <div className="w-full px-6 py-2 bg-gray-100 text-gray-800 text-sm font-medium rounded-full flex items-center gap-2">
+                <User className="w-4 h-4" />
+                <span className="truncate">{currentUsername}</span>
+              </div>
+            )}
           </div>
         )}
       </header>
