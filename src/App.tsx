@@ -8,10 +8,12 @@ import LugarCard from './components/Places/LugarCard';
 import { lugaresData } from './components/Places';
 import fashionModelImg from './Sources/fashion-model-bogota.jpg';
 import imgInicio from './Sources/imgInicio.jpg';
+import LoginComponent from './login/login-component';
+
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [page, setPage] = useState<'home' | 'outfits' | 'places' | 'brands'>('home');
+  const [page, setPage] = useState<'home' | 'outfits' | 'places' | 'brands' | 'login'>('home');
 
   const openPage = (p: 'home' | 'outfits' | 'places' | 'brands') => {
     setMenuOpen(false);
@@ -204,6 +206,14 @@ function App() {
       );
     }
 
+    if (page === 'login') {
+  return (
+    <section className="min-h-[70vh] flex items-center justify-center">
+      <LoginComponent />
+    </section>
+  );
+}
+
     return null;
   };
 
@@ -231,7 +241,7 @@ function App() {
             <button className="hidden md:block px-6 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition" onClick={() => openPage('brands')}>
               Discover more
             </button>
-            <button className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition">
+            <button onClick={() => openPage('login')} className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition">
               <User className="w-5 h-5" />
             </button>
             <button
