@@ -27,12 +27,12 @@ export function useAuthForm(mode: Mode, options?: Options) {
 
     if (mode === 'register') {
       if (!username || !email || !password || !confirmPassword || !firstName || !lastName) {
-        setError('Por favor completa los campos requeridos para el registro.');
+        setError('Por favor completa los campos obligatorios de registro.');
         return;
       }
     } else {
       if (!email || !password) {
-        setError('Por favor completa los campos requeridos.');
+        setError('Por favor completa los campos obligatorios.');
         return;
       }
     }
@@ -72,7 +72,7 @@ export function useAuthForm(mode: Mode, options?: Options) {
           last_name: lastName,
           phone: phone || undefined,
         });
-        setSuccess('Registro exitoso. Ahora puedes iniciar sesión.');
+        setSuccess('Registro exitoso. Ya puedes iniciar sesión.');
         setEmail('');
         setPassword('');
         setConfirmPassword('');
@@ -83,7 +83,7 @@ export function useAuthForm(mode: Mode, options?: Options) {
         if (options?.onRegisterSuccess) options.onRegisterSuccess();
       }
     } catch (err: any) {
-      setError(err?.message || 'Error en la petición');
+      setError(err?.message || 'Request error');
     } finally {
       setLoading(false);
     }

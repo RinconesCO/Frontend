@@ -2,10 +2,10 @@ import { Menu, User, Circle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import OutfitCard from './components/Outfits/OutfitCard';
 import { outfitsData } from './components/Outfits';
-import MarcaCard from './components/Brands/MarcaCard';
-import { marcasData } from './components/Brands';
-import LugarCard from './components/Places/LugarCard';
-import { lugaresData } from './components/Places';
+import BrandCard from './components/Brands/BrandCard';
+import { brandsData } from './components/Brands';
+import PlaceCard from './components/Places/PlaceCard';
+import { placesData } from './components/Places';
 import fashionModelImg from './Sources/fashion-model-bogota.jpg';
 import imgInicio from './Sources/imgInicio.jpg';
 import LoginComponent from './login/login-component';
@@ -63,7 +63,7 @@ function App() {
 
                 <div className="pt-4">
                   <button className="px-8 py-3 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 transition transform hover:scale-105" onClick={() => openPage('places')}>
-                    Explorar lugares 
+                    Explore places 
                   </button>
                 </div>
 
@@ -90,17 +90,7 @@ function App() {
                 </div>
 
                 <div className="absolute -right-4 top-1/4 bg-white rounded-2xl p-6 shadow-xl transform hover:scale-105 transition">
-                  <div className="w-24 h-24 bg-red-900 rounded-full flex items-center justify-center">
-                    <Circle className="w-12 h-12 text-white" fill="currentColor" />
-                  </div>
-                  <p className="mt-3 text-xs font-medium text-gray-900">Premium Design</p>
-                </div>
-
-                <div className="absolute -right-4 bottom-1/4 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-6 shadow-xl transform hover:scale-105 transition">
-                  <div className="w-24 h-24 bg-white/20 backdrop-blur rounded-full flex items-center justify-center">
-                    <div className="w-16 h-16 bg-white rounded-full"></div>
-                  </div>
-                  <p className="mt-3 text-xs font-medium text-white">Crafted Beauty</p>
+                  <p className="mt-3 text-xs font-medium text-gray-900"> ¡QUE CHIMBA! </p>
                 </div>
               </div>
             </div>
@@ -175,24 +165,24 @@ function App() {
         <section className="min-h-[70vh] max-w-7xl mx-auto px-6 py-16">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-4xl font-bold mb-2">Lugares</h2>
-              <p className="text-gray-600">Los mejores spots de Bogotá para tus sesiones de fotos</p>
+              <h2 className="text-4xl font-bold mb-2">Places</h2>
+              <p className="text-gray-600">Top spots in Bogotá for your fashion photoshoots</p>
             </div>
             <button className="text-sm text-gray-600 hover:text-gray-900 font-medium" onClick={() => openPage('home')}>← Volver</button>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {lugaresData.map((lugar) => (
-              <LugarCard
-                key={lugar.id}
-                id={lugar.id}
-                nombre={lugar.nombre}
-                zona={lugar.zona}
-                descripcion={lugar.descripcion}
-                imageUrl={lugar.imageUrl}
-                horario={lugar.horario}
-                caracteristicas={lugar.caracteristicas}
-                mejorHora={lugar.mejorHora}
+            {placesData.map((place) => (
+              <PlaceCard
+                key={place.id}
+                id={place.id}
+                name={place.name}
+                zone={place.zone}
+                description={place.description}
+                imageUrl={place.imageUrl}
+                hours={place.hours}
+                features={place.features}
+                bestHour={place.bestHour}
               />
             ))}
           </div>
@@ -205,22 +195,22 @@ function App() {
         <section className="min-h-[70vh] max-w-7xl mx-auto px-6 py-16">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-4xl font-bold mb-2">Marcas</h2>
-              <p className="text-gray-600">Marcas locales que definen la moda bogotana</p>
+              <h2 className="text-4xl font-bold mb-2">Brands</h2>
+              <p className="text-gray-600">Local brands that shape Bogota's fashion scene</p>
             </div>
             <button className="text-sm text-gray-600 hover:text-gray-900 font-medium" onClick={() => openPage('home')}>← Volver</button>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {marcasData.map((marca) => (
-              <MarcaCard
-                key={marca.id}
-                id={marca.id}
-                nombre={marca.nombre}
-                categoria={marca.categoria}
-                descripcion={marca.descripcion}
-                ubicacion={marca.ubicacion}
-                destacado={marca.destacado}
+            {brandsData.map((brand) => (
+              <BrandCard
+                key={brand.id}
+                id={brand.id}
+                name={brand.name}
+                category={brand.category}
+                description={brand.description}
+                location={brand.location}
+                featured={brand.featured}
               />
             ))}
           </div>
@@ -251,10 +241,10 @@ function App() {
                 Outfits
               </button>
               <button onClick={() => openPage('places')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
-                Lugares
+                Places
               </button>
               <button onClick={() => openPage('brands')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
-                Marcas
+                Brands
               </button>
             </div>
           </div>
@@ -267,7 +257,7 @@ function App() {
               </button>
             )}
 
-            <button title="Iniciar sesión" onClick={() => openPage('login')} className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition">
+            <button title="Sign in" onClick={() => openPage('login')} className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition">
               <User className="w-5 h-5" />
             </button>
             <button
@@ -282,8 +272,8 @@ function App() {
         {menuOpen && (
           <div className="md:hidden bg-white border-t border-gray-200 px-6 py-4 space-y-3">
             <button onClick={() => openPage('outfits')} className="block text-sm font-medium text-gray-700 text-left w-full">Outfits</button>
-            <button onClick={() => openPage('places')} className="block text-sm font-medium text-gray-700 text-left w-full">Lugares</button>
-            <button onClick={() => openPage('brands')} className="block text-sm font-medium text-gray-700 text-left w-full">Marcas</button>
+            <button onClick={() => openPage('places')} className="block text-sm font-medium text-gray-700 text-left w-full">Places</button>
+            <button onClick={() => openPage('brands')} className="block text-sm font-medium text-gray-700 text-left w-full">Brands</button>
             {currentUsername && (
               <div className="w-full px-6 py-2 bg-gray-100 text-gray-800 text-sm font-medium rounded-full flex items-center gap-2">
                 <User className="w-4 h-4" />
@@ -302,25 +292,25 @@ function App() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <h4 className="font-bold text-lg mb-4">Sobre Nosotros</h4>
+              <h4 className="font-bold text-lg mb-4">About Us</h4>
               <p className="text-sm text-gray-400 leading-relaxed">
-                Somos Desarrolladores Colombianos 
+                We are Colombian developers
               </p>
             </div>
             <div>
               <h5 className="font-semibold mb-4">Products</h5>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition">Spots en Bogotá</a></li>
-                <li><a href="#" className="hover:text-white transition">Mejores Spots</a></li>
-                <li><a href="#" className="hover:text-white transition">Lugares Iconicos</a></li>
+                <li><a href="#" className="hover:text-white transition">Spots in Bogotá</a></li>
+                <li><a href="#" className="hover:text-white transition">Top Spots</a></li>
+                <li><a href="#" className="hover:text-white transition">Iconic Places</a></li>
               </ul>
             </div>
             <div>
               <h5 className="font-semibold mb-4">Company</h5>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition">Sobre Nosotros</a></li>
+                <li><a href="#" className="hover:text-white transition">About Us</a></li>
                 <li><a href="#" className="hover:text-white transition">Sustainability</a></li>
-                <li><a href="#" className="hover:text-white transition">Contacto</a></li>
+                <li><a href="#" className="hover:text-white transition">Contact</a></li>
               </ul>
             </div>
             <div>

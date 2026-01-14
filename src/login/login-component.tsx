@@ -92,7 +92,7 @@ export default function LoginComponent() {
             </h2>
 
             <p className="text-sm mt-2 text-zinc-500 dark:text-zinc-400">
-              Descubre los mejores spots de moda en Bogotá.
+              Descubre los mejores sitios de moda en Bogotá.
             </p>
           </div>
 
@@ -239,10 +239,10 @@ export default function LoginComponent() {
           </form>
 
           {/* FOOTER */}
-          <p className="mt-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="mt-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
             {mode === 'login' ? (
               <>
-                ¿No tienes una cuenta?{' '}
+                ¿No tienes cuenta?{' '}
                 <span
                   className="text-primary font-bold cursor-pointer"
                   onClick={() => setMode('register')}
@@ -252,7 +252,7 @@ export default function LoginComponent() {
               </>
             ) : (
               <>
-                ¿Ya tienes una cuenta?{' '}
+                ¿Ya tienes cuenta?{' '}
                 <span
                   className="text-primary font-bold cursor-pointer"
                   onClick={() => setMode('login')}

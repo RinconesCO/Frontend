@@ -47,8 +47,8 @@ async function request(path: string, body: unknown) {
 
     if (typeof data === 'string') {
       const s = data.toLowerCase();
-      if (s.includes('invalid') && s.includes('credentials')) return 'Email o contraseña incorrectos.';
-      if (s.includes('already') && s.includes('registered')) return 'El usuario ya está registrado.';
+      if (s.includes('invalid') && s.includes('credentials')) return 'Correo electrónico o contraseña inválidos.';
+      if (s.includes('already') && s.includes('registered')) return 'Usuario ya registrado.';
       if (s.includes('already') && s.includes('exists')) return 'El usuario ya existe.';
       return data;
     }
@@ -63,11 +63,10 @@ async function request(path: string, body: unknown) {
           else parts.push((label ? label + ': ' : '') + String(data[key]));
         }
       };
-
-      pushField('username', 'Usuario');
-      pushField('email', 'Email');
+      pushField('username', 'Nombre de usuario');
+      pushField('email', 'Correo');
       pushField('password', 'Contraseña');
-      pushField('password2', 'Confirmación de contraseña');
+      pushField('password2', 'Confirmar contraseña');
       pushField('first_name', 'Nombre');
       pushField('last_name', 'Apellido');
       pushField('phone', 'Teléfono');
@@ -75,11 +74,11 @@ async function request(path: string, body: unknown) {
 
       const combined = parts.join(' ').toLowerCase();
       if (combined.includes('already') || combined.includes('exist') || combined.includes('ya existe') || combined.includes('already registered')) {
-        return 'El usuario ya existe o el email ya está registrado.';
+        return 'El usuario ya existe o el correo ya está registrado.';
       }
 
       if (combined.includes('password') && (combined.includes('weak') || combined.includes('too') || combined.includes('short') || combined.includes('common') || combined.includes('demasiado'))) {
-        return 'La contraseña es demasiado débil. Usa una combinación de letras, números y símbolos.';
+        return 'La contraseña es muy débil. Usa una combinación de letras, números y símbolos.';
       }
 
       if (combined.includes('match') || combined.includes('mismatch') || combined.includes('no coincide') || combined.includes('coinciden')) {
