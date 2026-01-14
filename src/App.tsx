@@ -7,6 +7,7 @@ import { brandsData } from './components/Brands';
 import PlaceCard from './components/Places/PlaceCard';
 import { placesData } from './components/Places';
 import fashionModelImg from './Sources/fashion-model-bogota.jpg';
+import oldImg from './Sources/Old.jpg';
 import imgInicio from './Sources/imgInicio.jpg';
 import LoginComponent from './login/login-component';
 
@@ -50,7 +51,7 @@ function App() {
           <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight">
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight display-font">
                   Bogotá<br />
                   La capital<br />
                   de la moda 
@@ -61,11 +62,7 @@ function App() {
                   Desde barrios vibrantes hasta paisajes urbanos icónicos, encuentra el escenario perfecto para tu próxima sesión.
                 </p>
 
-                <div className="pt-4">
-                  <button className="px-8 py-3 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 transition transform hover:scale-105" onClick={() => openPage('places')}>
-                    Explore places 
-                  </button>
-                </div>
+                
 
                 <div className="pt-8 space-y-2 text-xs text-gray-400 leading-relaxed">
                   <p className="uppercase tracking-wider">
@@ -80,7 +77,7 @@ function App() {
               </div>
 
               <div className="relative">
-                <div className="relative bg-gradient-to-br from-red-400 to-red-900 rounded-3xl overflow-hidden shadow-2xl aspect-[3/4] flex items-center justify-center">
+                <div className="relative bg-gradient-to-br from-red-400 to-red-900 rounded-3xl overflow-hidden shadow-none aspect-[3/4] flex items-center justify-center">
                   <div className="absolute inset-0 bg-black/20"></div>
                   <img
                     src={fashionModelImg}
@@ -89,8 +86,8 @@ function App() {
                   />
                 </div>
 
-                <div className="absolute -right-4 top-1/4 bg-white rounded-2xl p-6 shadow-xl transform hover:scale-105 transition">
-                  <p className="mt-3 text-xs font-medium text-gray-900"> ¡QUE CHIMBA! </p>
+                <div className="absolute -right-4 top-1/4 bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition">
+                  <p className="mt-3 text-4xl md:text-5xl font-medium text-gray-900 display-font"> ¡QUE CHIMBA! </p>
                 </div>
               </div>
             </div>
@@ -98,34 +95,16 @@ function App() {
 
           <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
-                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-                  <Circle className="w-8 h-8 text-red-600" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Sustainable</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Ethically sourced materials and eco-friendly production processes
-                </p>
+              <div className="rounded-2xl overflow-hidden">
+                <img src={fashionModelImg} alt="Sustainable" className="w-full h-56 object-cover" />
               </div>
 
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
-                <div className="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mb-4">
-                  <Circle className="w-8 h-8 text-white" fill="currentColor" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Premium Quality</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Handcrafted with attention to detail and superior materials
-                </p>
+              <div className="rounded-2xl overflow-hidden">
+                <img src={imgInicio} alt="Premium Quality" className="w-full h-56 object-cover" />
               </div>
 
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
-                <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mb-4">
-                  <Circle className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Timeless Design</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Classic aesthetics that transcend seasonal trends
-                </p>
+              <div className="rounded-2xl overflow-hidden">
+                <img src={fashionModelImg} alt="Timeless Design" className="w-full h-56 object-cover" />
               </div>
             </div>
           </section>
@@ -288,45 +267,22 @@ function App() {
         {renderPage()}
       </main>
 
-      <footer className="bg-gray-900 text-white py-12 mt-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h4 className="font-bold text-lg mb-4">About Us</h4>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                We are Colombian developers
+        
+        <footer className="mt-20">
+          <div className="w-full h-48 md:h-64 relative overflow-hidden">
+            <img 
+              src={oldImg} 
+              alt="Old" 
+              className="absolute inset-0 w-full h-full object-cover object-[center_40%]" 
+            />
+            <div className="absolute inset-0 bg-gray-900/60"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <p className="display-font w-full text-center text-white text-5xl md:text-7xl leading-none px-6">
+                Estilo real, nacido en Bogotá.
               </p>
             </div>
-            <div>
-              <h5 className="font-semibold mb-4">Products</h5>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition">Spots in Bogotá</a></li>
-                <li><a href="#" className="hover:text-white transition">Top Spots</a></li>
-                <li><a href="#" className="hover:text-white transition">Iconic Places</a></li>
-              </ul>
-            </div>
-            <div>
-              <h5 className="font-semibold mb-4">Company</h5>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition">About Us</a></li>
-                <li><a href="#" className="hover:text-white transition">Sustainability</a></li>
-                <li><a href="#" className="hover:text-white transition">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h5 className="font-semibold mb-4">Support</h5>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition">FAQ</a></li>
-                <li><a href="#" className="hover:text-white transition">Shipping</a></li>
-                <li><a href="#" className="hover:text-white transition">Returns</a></li>
-              </ul>
-            </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2026 Annatar. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+        </footer>
     </div>
   );
 }

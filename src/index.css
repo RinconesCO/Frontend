@@ -1,5 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oi&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Oi&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Display font for hero headings */
+.display-font {
+	font-family: 'Bebas Neue', 'Anton', 'Oi', system-ui, -apple-system, 'Segoe UI', Roboto, "Helvetica Neue", Arial;
+}
