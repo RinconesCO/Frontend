@@ -1,10 +1,103 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Oi&display=swap');
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Display font for hero headings */
+/* Fuente de display para los encabezados del hero */
 .display-font {
 	font-family: 'Bebas Neue', 'Anton', 'Oi', system-ui, -apple-system, 'Segoe UI', Roboto, "Helvetica Neue", Arial;
 }
+
+/* Reglas globales para el modo oscuro */
+html.dark body {
+	background-color: #0b0b0c;
+	color: #f8fafc;
+}
+
+.dark .bg-white,
+.dark .bg-gray-50,
+.dark .bg-gray-100 {
+	background-color: #0b0b0c !important;
+}
+
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700,
+.dark .text-gray-600,
+.dark .text-gray-400 {
+	color: #f8fafc !important;
+}
+
+.dark .border-gray-200,
+.dark .border-gray-300 {
+	border-color: #222 !important;
+}
+
+/* Oscurecer ligeramente el degradado del hero en modo oscuro */
+.dark .bg-gradient-to-br.from-red-400 {
+	--tw-gradient-from: #7f1d1d;
+}
+
+/* Hacer tarjetas y paneles ligeramente transparentes en modo oscuro */
+.dark .absolute.-right-4.top-1\/4.bg-gray-50 {
+	background-color:  #0b0b0c!important;
+}
+
+.dark .rounded-2xl.overflow-hidden img {
+	filter: brightness(0.9) contrast(0.95);
+}
+
+.dark .display-font {
+	color: #fff;
+}
+
+/* Elementos de la barra de navegacion en modo claro dentro del modo oscuro */ 
+.dark .no-dark {
+	background-color: rgba(255,255,255,0.9) !important;
+	border-bottom-color: #e5e7eb !important;
+}
+
+.dark .no-dark * {
+	color: #111827 !important;
+}
+
+.dark .no-dark .bg-white,
+.dark .no-dark .bg-gray-50,
+.dark .no-dark .bg-gray-100 {
+	background-color: rgba(255,255,255,0.9) !important;
+}
+
+.dark .no-dark .border-gray-200,
+.dark .no-dark .border-gray-300 {
+	border-color: #e5e7eb !important;
+}
+
+/* Giant background word for the landing page */
+.bg-giant-word {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: clamp(8rem, 20vw, 28rem);
+	line-height: 1;
+	color: #dc2626; /* red for light mode */
+	opacity: 0.12;
+	mix-blend-mode: multiply;
+	pointer-events: none;
+	user-select: none;
+	z-index: 0;
+	white-space: nowrap;
+	transform: translateY(-8%);
+}
+
+/* Yellow in dark mode, force override of other display-font color rules */
+html.dark .bg-giant-word {
+	color: #facc15 !important;
+	opacity: 0.14;
+	mix-blend-mode: screen;
+}
+
+/* Note: stacking is handled inside React root; avoid forcing #root z-index here */

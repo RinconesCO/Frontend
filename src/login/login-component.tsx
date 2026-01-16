@@ -264,14 +264,6 @@ export default function LoginComponent() {
           </p>
         </div>
       </main>
-
-      {/* DARK MODE BUTTON */}
-      <button
-        onClick={() => setDark(!dark)}
-        className="fixed bottom-4 right-4 z-20 w-10 h-10 rounded-full bg-white dark:bg-zinc-900 shadow border flex items-center justify-center"
-      >
-        {dark ? '☀️' : '🌙'}
-      </button>
     </div>
   );
 }
