@@ -11,18 +11,27 @@ import fashionModelImg from './Sources/fashion-model-bogota.jpg';
 import oldImg from './Sources/Old.jpg';
 import imgInicio from './Sources/imgInicio.jpg';
 import LoginComponent from './login/login-component';
+import Loader from './components/Loader';
 
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [page, setPage] = useState<'home' | 'outfits' | 'places' | 'brands' | 'login'>('home');
   const [currentUsername, setCurrentUsername] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const openPage = (p: 'login' | 'home' | 'outfits' | 'places' | 'brands') => {
     setMenuOpen(false);
+    setIsLoading(true);
     setPage(p);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => setIsLoading(false), 700);
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 2000);
+  }, []);
 
   useEffect(() => {
     try {
@@ -215,6 +224,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 overflow-hidden relative z-10">
+      {isLoading && <Loader />}
       <div className="bg-giant-word display-font" aria-hidden="true">太棒了</div>
       <header className="no-dark fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
