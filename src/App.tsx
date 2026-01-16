@@ -1,4 +1,5 @@
 import { Menu, User, Circle } from 'lucide-react';
+import DarkModeToggle from './components/DarkModeToggle';
 import { useState, useEffect } from 'react';
 import OutfitCard from './components/Outfits/OutfitCard';
 import { outfitsData } from './components/Outfits';
@@ -86,8 +87,12 @@ function App() {
                   />
                 </div>
 
-                <div className="absolute -right-4 top-1/4 bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition">
-                  <p className="mt-3 text-4xl md:text-5xl font-medium text-gray-900 display-font"> ¡QUE CHIMBA! </p>
+                <div className="absolute -right-6 top-1/3 bg-gray-50 p-3 ">
+                  <img
+                    src={fashionModelImg}
+                    alt="Model"
+                    className="w-40 h-56 object-cover shadow-lg"
+                  />
                 </div>
               </div>
             </div>
@@ -209,8 +214,9 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 overflow-hidden">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+    <div className="min-h-screen bg-gray-50 overflow-hidden relative z-10">
+      <div className="bg-giant-word display-font" aria-hidden="true">太棒了</div>
+      <header className="no-dark fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-12">
             <button onClick={() => openPage('home')} className="text-2xl font-bold tracking-tight">BogoSpots</button>
@@ -229,6 +235,7 @@ function App() {
           </div>
 
           <div className="flex items-center space-x-4">
+            <DarkModeToggle />
             {currentUsername && (
               <button className="hidden md:flex items-center gap-3 px-4 py-2 bg-gray-100 text-gray-800 text-sm font-medium rounded-full transition">
                 <User className="w-4 h-4" />
@@ -249,7 +256,7 @@ function App() {
         </nav>
 
         {menuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-200 px-6 py-4 space-y-3">
+          <div className="no-dark md:hidden bg-white border-t border-gray-200 px-6 py-4 space-y-3">
             <button onClick={() => openPage('outfits')} className="block text-sm font-medium text-gray-700 text-left w-full">Outfits</button>
             <button onClick={() => openPage('places')} className="block text-sm font-medium text-gray-700 text-left w-full">Places</button>
             <button onClick={() => openPage('brands')} className="block text-sm font-medium text-gray-700 text-left w-full">Brands</button>
