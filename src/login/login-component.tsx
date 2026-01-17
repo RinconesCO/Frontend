@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FiMail, FiLock, FiAtSign, FiUser, FiEye, FiEyeOff, FiPhone, FiPower } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { FaInstagram } from 'react-icons/fa';
@@ -17,7 +17,6 @@ const backgroundImages = [
 
 export default function LoginComponent() {
   const [mode, setMode] = useState<'login' | 'register'>('login');
-  const [dark, setDark] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -41,14 +40,6 @@ export default function LoginComponent() {
     handleSubmit,
   } = useAuthForm(mode, { onRegisterSuccess: () => setMode('login') });
 
-  // ✅ DARK MODE REAL (TAILWIND)
-  useEffect(() => {
-    if (dark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [dark]);
 
   return (
     <div className="relative min-h-screen bg-background-light dark:bg-background-dark overflow-hidden flex items-center justify-center">

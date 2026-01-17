@@ -1,17 +1,16 @@
 import { Menu, User, Circle } from 'lucide-react';
 import DarkModeToggle from './components/DarkModeToggle';
-import { useState, useEffect } from 'react';
-import OutfitCard from './components/Outfits/OutfitCard';
-import { outfitsData } from './components/Outfits';
-import BrandCard from './components/Brands/BrandCard';
-import { brandsData } from './components/Brands';
-import PlaceCard from './components/Places/PlaceCard';
-import { placesData } from './components/Places';
+import { useState, useEffect, useRef } from 'react';
+import Loader from './components/Loader';
+import OutfitsPage from './pages/OutfitsPage';
+import PlacesPage from './pages/PlacesPage';
+import BrandsPage from './pages/BrandsPage';
 import fashionModelImg from './Sources/fashion-model-bogota.jpg';
 import oldImg from './Sources/Old.jpg';
 import imgInicio from './Sources/imgInicio.jpg';
+import spot1 from './Sources/Spot1.jpeg';
+import spot2 from './Sources/Spot2.jpeg';
 import LoginComponent from './login/login-component';
-import Loader from './components/Loader';
 
 
 function App() {
@@ -20,17 +19,27 @@ function App() {
   const [currentUsername, setCurrentUsername] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const loadingTimer = useRef<number | null>(null);
+
   const openPage = (p: 'login' | 'home' | 'outfits' | 'places' | 'brands') => {
     setMenuOpen(false);
+    // show loader briefly during page transition
+    try {
+      if (loadingTimer.current) window.clearTimeout(loadingTimer.current);
+    } catch (_) {}
     setIsLoading(true);
-    setPage(p);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => setIsLoading(false), 700);
+    // small delay to simulate loading/transition
+    loadingTimer.current = window.setTimeout(() => {
+      setPage(p);
+      setIsLoading(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 450);
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 2000);
+    return () => {
+      if (loadingTimer.current) window.clearTimeout(loadingTimer.current);
+    };
   }, []);
 
   useEffect(() => {
@@ -58,6 +67,43 @@ function App() {
     if (page === 'home') {
       return (
         <>
+
+          {/* HERO: Bienvenida a Museo Rolo — diseño enriquecido con fondo, overlays y CTA */}
+          <section className="w-full h-screen relative flex items-center justify-center overflow-hidden">
+            <img
+              src={imgInicio}
+              alt="Hero background"
+              className="absolute inset-0 w-full h-full object-cover object-center scale-110"
+            />
+
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"></div>
+
+            <div className="absolute -left-28 -top-20 w-72 h-72 bg-pink-500 rounded-full blur-3xl opacity-30"></div>
+            <div className="absolute -right-28 -bottom-20 w-96 h-96 bg-yellow-400 rounded-full blur-3xl opacity-20"></div>
+
+            <div className="relative z-10 max-w-4xl text-center px-6">
+              <h1 className="text-5xl md:text-[80px] lg:text-[120px] leading-tight text-white font-extrabold display-font drop-shadow-lg">
+                BIENVENIDOS A ESTE MUSEO ROLO
+              </h1>
+
+              <p className="mt-6 text-lg md:text-2xl text-gray-100 max-w-2xl mx-auto">
+                Un espacio donde la moda se encuentra con la ciudad — descubre lugares, outfits y marcas que cuentan historias.
+              </p>
+
+              <div className="mt-8 flex items-center justify-center gap-4">
+                <button onClick={() => openPage('places')} className="px-6 py-3 border border-white text-white rounded-full font-semibold bg-white/10 hover:bg-white/20 transition">
+                  Explorar Lugares
+                </button>
+                <button onClick={() => openPage('outfits')} className="px-6 py-3 border border-white text-white rounded-full font-semibold bg-white/10 hover:bg-white/20 transition">
+                  Ver Outfits
+                </button>
+              </div>
+
+              <div className="mt-6 text-xs text-gray-200 uppercase tracking-wider">Bogotá • Fotografía • Estilo</div>
+            </div>
+          </section>
+
+          {/* SEGUNDA seccion a la derecha */}
           <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
@@ -71,16 +117,15 @@ function App() {
                   Descrubre las mejores ubicaciones para sesiones de fotos de moda en Bogotá. 
                   Desde barrios vibrantes hasta paisajes urbanos icónicos, encuentra el escenario perfecto para tu próxima sesión.
                 </p>
-
                 
 
                 <div className="pt-8 space-y-2 text-xs text-gray-400 leading-relaxed">
                   <p className="uppercase tracking-wider">
-                    MODA • CALIDAD • MADE IN BOGOTA • ESTILO •
+                    MODA • CALIDAD • MADE IN BOGOTÁ • ESTILO •
                     UNICO • RARO • DIFERENTE • EXPRESION PERSONAL • FOTOGRAFIA
                   </p>
                   <p className="uppercase tracking-wider">
-                    MODA • CALIDAD • MADE IN BOGOTA • ESTILO •
+                    MODA • CALIDAD • MADE IN BOGOTÁ • ESTILO •
                     UNICO • RARO • DIFERENTE • EXPRESION PERSONAL • FOTOGRAFIA
                   </p>
                 </div>
@@ -107,6 +152,59 @@ function App() {
             </div>
           </section>
 
+
+          {/* TERCERA seccion a la izquierda */}
+          <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="relative">
+                <div className="relative bg-gradient-to-br from-red-400 to-red-900 rounded-3xl overflow-hidden shadow-none aspect-[3/4] flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/20"></div>
+                  <img
+                    src={spot1}
+                    alt="Spot 1"
+                    className="w-full h-full object-cover opacity-95"
+                  />
+                </div>
+
+                <div className="absolute -right-6 top-1/3 bg-gray-50 p-3 ">
+                  <img
+                    src={spot2}
+                    alt="Spot thumbnail"
+                    className="w-40 h-56 object-cover shadow-lg"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight display-font">
+                  Lugares<br />
+                  Chimbas<br />
+                  Para tus fotos 
+                </h2>
+
+                <p className="text-lg text-gray-600 max-w-md leading-relaxed">
+                  Bogotá no solo es la capital de Colombia, sino tambien un epicentro de moda y estilo en America Latina.
+                  Sus calles vibrantes, arquitectura unica y cultura diversa la convierten en el lugar ideal para sesiones de fotos de moda que capturan la esencia urbana y contemporanea.
+                </p>
+                
+              </div>
+            </div>
+          </section>
+
+
+          {/* CUARTA seccion con una imagen estirada de lado a lado y debajo un texto  */}
+          <section className="w-full relative overflow-hidden">
+            <div className="absolute inset-0 w-full h-64 md:h-[420px] lg:h-[560px]">
+              <img src={imgInicio} alt="Inicio" className="w-full h-full object-cover object-center" />
+              <div className="absolute inset-0 bg-black/30"></div>
+            </div>
+
+            <div className="relative max-w-7xl mx-auto px-6 py-28 md:py-36">
+              <h3 className="display-font text-white text-5xl md:text-7xl lg:text-8xl text-center">ciudad unica</h3>
+            </div>
+          </section>
+
+          {/* QUINTA seccion con tres imagenes en fila */}
           <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
             <div className="grid md:grid-cols-3 gap-8">
               <div className="rounded-2xl overflow-hidden">
@@ -127,88 +225,15 @@ function App() {
     }
 
     if (page === 'outfits') {
-      return (
-        <section className="min-h-[70vh] max-w-7xl mx-auto px-6 py-16">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-4xl font-bold mb-2">Outfits</h2>
-              <p className="text-gray-600">Descubre los mejores looks urbanos de Bogotá</p>
-            </div>
-            <button className="text-sm text-gray-600 hover:text-gray-900 font-medium" onClick={() => openPage('home')}>← Volver</button>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {outfitsData.map((outfit) => (
-              <OutfitCard
-                key={outfit.id}
-                id={outfit.id}
-                imageUrl={outfit.imageUrl}
-                title={outfit.title}
-                description={outfit.description}
-                tags={outfit.tags}
-              />
-            ))}
-          </div>
-        </section>
-      );
+      return <OutfitsPage openPage={openPage} />;
     }
 
     if (page === 'places') {
-      return (
-        <section className="min-h-[70vh] max-w-7xl mx-auto px-6 py-16">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-4xl font-bold mb-2">Places</h2>
-              <p className="text-gray-600">Top spots in Bogotá for your fashion photoshoots</p>
-            </div>
-            <button className="text-sm text-gray-600 hover:text-gray-900 font-medium" onClick={() => openPage('home')}>← Volver</button>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {placesData.map((place) => (
-              <PlaceCard
-                key={place.id}
-                id={place.id}
-                name={place.name}
-                zone={place.zone}
-                description={place.description}
-                imageUrl={place.imageUrl}
-                hours={place.hours}
-                features={place.features}
-                bestHour={place.bestHour}
-              />
-            ))}
-          </div>
-        </section>
-      );
+      return <PlacesPage openPage={openPage} />;
     }
 
     if (page === 'brands') {
-      return (
-        <section className="min-h-[70vh] max-w-7xl mx-auto px-6 py-16">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-4xl font-bold mb-2">Brands</h2>
-              <p className="text-gray-600">Local brands that shape Bogota's fashion scene</p>
-            </div>
-            <button className="text-sm text-gray-600 hover:text-gray-900 font-medium" onClick={() => openPage('home')}>← Volver</button>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {brandsData.map((brand) => (
-              <BrandCard
-                key={brand.id}
-                id={brand.id}
-                name={brand.name}
-                category={brand.category}
-                description={brand.description}
-                location={brand.location}
-                featured={brand.featured}
-              />
-            ))}
-          </div>
-        </section>
-      );
+      return <BrandsPage openPage={openPage} />;
     }
 
     if (page === 'login') {
@@ -223,13 +248,17 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 overflow-hidden relative z-10">
+    <div className="min-h-screen bg-gray-50 overflow-hidden relative z-0">
       {isLoading && <Loader />}
-      <div className="bg-giant-word display-font" aria-hidden="true">太棒了</div>
+      {page !== 'login' && (
+        <div className="bg-giant-word display-font" aria-hidden="true">
+          太 棒 了
+        </div>
+      )}
       <header className="no-dark fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-12">
-            <button onClick={() => openPage('home')} className="text-2xl font-bold tracking-tight">BogoSpots</button>
+            <button onClick={() => openPage('home')} className="text-2xl font-bold tracking-tight display-font">BogoSpots</button>
 
             <div className="hidden md:flex items-center space-x-8">
               <button onClick={() => openPage('outfits')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">

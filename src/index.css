@@ -55,8 +55,8 @@ html.dark body {
 
 /* Elementos de la barra de navegacion en modo claro dentro del modo oscuro */ 
 .dark .no-dark {
-	background-color: rgba(255,255,255,0.9) !important;
-	border-bottom-color: #e5e7eb !important;
+	background-color: rgba(255, 255, 255, 0.9) !important;
+	border-bottom-color: #facc15 !important;
 }
 
 .dark .no-dark * {
@@ -74,7 +74,7 @@ html.dark body {
 	border-color: #e5e7eb !important;
 }
 
-/* Giant background word for the landing page */
+/* Estilos para la palabra gigante de fondo */
 .bg-giant-word {
 	position: fixed;
 	inset: 0;
@@ -93,11 +93,11 @@ html.dark body {
 	transform: translateY(-8%);
 }
 
-/* Yellow in dark mode, force override of other display-font color rules */
+/* color para las letras del fondo */
 html.dark .bg-giant-word {
 	color: #facc15 !important;
 	opacity: 0.14;
 	mix-blend-mode: screen;
 }
 
-/* Note: stacking is handled inside React root; avoid forcing #root z-index here */
+
