@@ -18,6 +18,9 @@ function App() {
   const [page, setPage] = useState<'home' | 'outfits' | 'places' | 'brands' | 'login'>('home');
   const [currentUsername, setCurrentUsername] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement | null>(null);
+
 
   const loadingTimer = useRef<number | null>(null);
 
@@ -62,6 +65,19 @@ function App() {
       window.removeEventListener('bogospots:logout', () => setCurrentUsername(null));
     };
   }, []);
+  useEffect(() => {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (
+      userMenuRef.current &&
+      !userMenuRef.current.contains(e.target as Node)
+    ) {
+      setUserMenuOpen(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, []);
 
   const renderPage = () => {
     if (page === 'home') {
@@ -282,9 +298,67 @@ function App() {
               </button>
             )}
 
-            <button title="Sign in" onClick={() => openPage('login')} className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition">
+            <div className="relative" ref={userMenuRef}>
+            <button
+              title="User menu"
+              onClick={() => setUserMenuOpen(!userMenuOpen)}
+              className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition"
+            >
               <User className="w-5 h-5" />
             </button>
+
+            {userMenuOpen && (
+              <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden z-50">
+                {!currentUsername ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        openPage('login');
+                      }}
+                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition"
+                    >
+                      Registrarse
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        openPage('login');
+                      }}
+                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition"
+                    >
+                      Iniciar Sesión
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="px-4 py-3 text-sm text-gray-500">
+                      Sesión iniciada como
+                      <div className="font-medium text-gray-900 truncate">
+                        {currentUsername}
+                      </div>
+                    </div>
+
+                    <div className="border-t border-gray-100"></div>
+
+                    <button
+                      onClick={() => {
+                        localStorage.removeItem('bogospots_username');
+                        window.dispatchEvent(new Event('bogospots:logout'));
+                        setUserMenuOpen(false);
+                        openPage('home');
+                      }}
+                      className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition"
+                    >
+                      Cerrar sesión
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+
             <button
               className="md:hidden p-2"
               onClick={() => setMenuOpen(!menuOpen)}
