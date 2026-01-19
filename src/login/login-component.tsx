@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FiMail, FiLock, FiAtSign, FiUser, FiEye, FiEyeOff, FiPhone, FiPower } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { FaInstagram } from 'react-icons/fa';
@@ -17,7 +17,6 @@ const backgroundImages = [
 
 export default function LoginComponent() {
   const [mode, setMode] = useState<'login' | 'register'>('login');
-  const [dark, setDark] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -41,14 +40,6 @@ export default function LoginComponent() {
     handleSubmit,
   } = useAuthForm(mode, { onRegisterSuccess: () => setMode('login') });
 
-  // ✅ DARK MODE REAL (TAILWIND)
-  useEffect(() => {
-    if (dark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [dark]);
 
   return (
     <div className="relative min-h-screen bg-background-light dark:bg-background-dark overflow-hidden flex items-center justify-center">
@@ -92,7 +83,7 @@ export default function LoginComponent() {
             </h2>
 
             <p className="text-sm mt-2 text-zinc-500 dark:text-zinc-400">
-              Descubre los mejores spots de moda en Bogotá.
+              Descubre los mejores sitios de moda en Bogotá.
             </p>
           </div>
 
@@ -239,10 +230,10 @@ export default function LoginComponent() {
           </form>
 
           {/* FOOTER */}
-          <p className="mt-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="mt-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
             {mode === 'login' ? (
               <>
-                ¿No tienes una cuenta?{' '}
+                ¿No tienes cuenta?{' '}
                 <span
                   className="text-primary font-bold cursor-pointer"
                   onClick={() => setMode('register')}
@@ -252,7 +243,7 @@ export default function LoginComponent() {
               </>
             ) : (
               <>
-                ¿Ya tienes una cuenta?{' '}
+                ¿Ya tienes cuenta?{' '}
                 <span
                   className="text-primary font-bold cursor-pointer"
                   onClick={() => setMode('login')}
@@ -264,14 +255,6 @@ export default function LoginComponent() {
           </p>
         </div>
       </main>
-
-      {/* DARK MODE BUTTON */}
-      <button
-        onClick={() => setDark(!dark)}
-        className="fixed bottom-4 right-4 z-20 w-10 h-10 rounded-full bg-white dark:bg-zinc-900 shadow border flex items-center justify-center"
-      >
-        {dark ? '☀️' : '🌙'}
-      </button>
     </div>
   );
 }
