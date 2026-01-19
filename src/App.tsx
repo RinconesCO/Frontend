@@ -10,6 +10,7 @@ import spot1 from './Sources/Spot1.jpeg';
 import spot2 from './Sources/Spot2.jpeg';
 import LoginComponent from './login/login-component';
 import Header from './components/Header';
+import CoverflowCarousel from './components/CoverflowCarousel';
 
 
 function App() {
@@ -67,6 +68,8 @@ function App() {
 
   const renderPage = () => {
     if (page === 'home') {
+      const carouselImages = [fashionModelImg, spot1, spot2, imgInicio, oldImg];
+
       return (
         <>
 
@@ -104,6 +107,10 @@ function App() {
               <div className="mt-6 text-xs text-gray-200 uppercase tracking-wider">Bogotá • Fotografía • Estilo</div>
             </div>
           </section>
+
+          {/* CARRUSEL tipo coverflow - debajo de la primera sección */}
+          <CoverflowCarousel images={carouselImages} />
+
 
           {/* SEGUNDA seccion a la derecha */}
           <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
@@ -192,36 +199,6 @@ function App() {
               </div>
             </div>
           </section>
-
-
-          {/* CUARTA seccion con una imagen estirada de lado a lado y debajo un texto  */}
-          <section className="w-full relative overflow-hidden">
-            <div className="absolute inset-0 w-full h-64 md:h-[420px] lg:h-[560px]">
-              <img src={imgInicio} alt="Inicio" className="w-full h-full object-cover object-center" />
-              <div className="absolute inset-0 bg-black/30"></div>
-            </div>
-
-            <div className="relative max-w-7xl mx-auto px-6 py-28 md:py-36">
-              <h3 className="display-font text-white text-5xl md:text-7xl lg:text-8xl text-center">ciudad unica</h3>
-            </div>
-          </section>
-
-          {/* QUINTA seccion con tres imagenes en fila */}
-          <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="rounded-2xl overflow-hidden">
-                <img src={fashionModelImg} alt="Sustainable" className="w-full h-56 object-cover" />
-              </div>
-
-              <div className="rounded-2xl overflow-hidden">
-                <img src={imgInicio} alt="Premium Quality" className="w-full h-56 object-cover" />
-              </div>
-
-              <div className="rounded-2xl overflow-hidden">
-                <img src={fashionModelImg} alt="Timeless Design" className="w-full h-56 object-cover" />
-              </div>
-            </div>
-          </section>
         </>
       );
     }
@@ -265,7 +242,7 @@ function App() {
         {renderPage()}
       </main>
 
-        
+      {page === 'home' && (
         <footer className="mt-20">
           <div className="w-full h-48 md:h-64 relative overflow-hidden">
             <img 
@@ -281,6 +258,7 @@ function App() {
             </div>
           </div>
         </footer>
+      )}
     </div>
   );
 }
