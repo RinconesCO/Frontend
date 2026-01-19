@@ -1,5 +1,3 @@
-import { Menu, User, Circle } from 'lucide-react';
-import DarkModeToggle from './components/DarkModeToggle';
 import { useState, useEffect, useRef } from 'react';
 import Loader from './components/Loader';
 import OutfitsPage from './pages/OutfitsPage';
@@ -11,6 +9,7 @@ import imgInicio from './Sources/imgInicio.jpg';
 import spot1 from './Sources/Spot1.jpeg';
 import spot2 from './Sources/Spot2.jpeg';
 import LoginComponent from './login/login-component';
+import Header from './components/Header';
 
 
 function App() {
@@ -19,13 +18,13 @@ function App() {
   const [currentUsername, setCurrentUsername] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const userMenuRef = useRef<HTMLDivElement | null>(null);
 
 
   const loadingTimer = useRef<number | null>(null);
 
   const openPage = (p: 'login' | 'home' | 'outfits' | 'places' | 'brands') => {
     setMenuOpen(false);
+    setPage(p);
     // show loader briefly during page transition
     try {
       if (loadingTimer.current) window.clearTimeout(loadingTimer.current);
@@ -33,7 +32,6 @@ function App() {
     setIsLoading(true);
     // small delay to simulate loading/transition
     loadingTimer.current = window.setTimeout(() => {
-      setPage(p);
       setIsLoading(false);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 450);
@@ -65,19 +63,7 @@ function App() {
       window.removeEventListener('bogospots:logout', () => setCurrentUsername(null));
     };
   }, []);
-  useEffect(() => {
-  const handleClickOutside = (e: MouseEvent) => {
-    if (
-      userMenuRef.current &&
-      !userMenuRef.current.contains(e.target as Node)
-    ) {
-      setUserMenuOpen(false);
-    }
-  };
 
-  document.addEventListener('mousedown', handleClickOutside);
-  return () => document.removeEventListener('mousedown', handleClickOutside);
-}, []);
 
   const renderPage = () => {
     if (page === 'home') {
@@ -271,117 +257,9 @@ function App() {
           太 棒 了
         </div>
       )}
-      <header className="no-dark fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
-        <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-12">
-            <button onClick={() => openPage('home')} className="text-2xl font-bold tracking-tight display-font">BogoSpots</button>
-
-            <div className="hidden md:flex items-center space-x-8">
-              <button onClick={() => openPage('outfits')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
-                Outfits
-              </button>
-              <button onClick={() => openPage('places')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
-                Places
-              </button>
-              <button onClick={() => openPage('brands')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
-                Brands
-              </button>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <DarkModeToggle />
-            {currentUsername && (
-              <button className="hidden md:flex items-center gap-3 px-4 py-2 bg-gray-100 text-gray-800 text-sm font-medium rounded-full transition">
-                <User className="w-4 h-4" />
-                <span className="font-medium">{currentUsername}</span>
-              </button>
-            )}
-
-            <div className="relative" ref={userMenuRef}>
-            <button
-              title="User menu"
-              onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition"
-            >
-              <User className="w-5 h-5" />
-            </button>
-
-            {userMenuOpen && (
-              <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden z-50">
-                {!currentUsername ? (
-                  <>
-                    <button
-                      onClick={() => {
-                        setUserMenuOpen(false);
-                        openPage('login');
-                      }}
-                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition"
-                    >
-                      Registrarse
-                    </button>
-
-                    <button
-                      onClick={() => {
-                        setUserMenuOpen(false);
-                        openPage('login');
-                      }}
-                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition"
-                    >
-                      Iniciar Sesión
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <div className="px-4 py-3 text-sm text-gray-500">
-                      Sesión iniciada como
-                      <div className="font-medium text-gray-900 truncate">
-                        {currentUsername}
-                      </div>
-                    </div>
-
-                    <div className="border-t border-gray-100"></div>
-
-                    <button
-                      onClick={() => {
-                        localStorage.removeItem('bogospots_username');
-                        window.dispatchEvent(new Event('bogospots:logout'));
-                        setUserMenuOpen(false);
-                        openPage('home');
-                      }}
-                      className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition"
-                    >
-                      Cerrar sesión
-                    </button>
-                  </>
-                )}
-              </div>
-            )}
-          </div>
-
-            <button
-              className="md:hidden p-2"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-          </div>
-        </nav>
-
-        {menuOpen && (
-          <div className="no-dark md:hidden bg-white border-t border-gray-200 px-6 py-4 space-y-3">
-            <button onClick={() => openPage('outfits')} className="block text-sm font-medium text-gray-700 text-left w-full">Outfits</button>
-            <button onClick={() => openPage('places')} className="block text-sm font-medium text-gray-700 text-left w-full">Places</button>
-            <button onClick={() => openPage('brands')} className="block text-sm font-medium text-gray-700 text-left w-full">Brands</button>
-            {currentUsername && (
-              <div className="w-full px-6 py-2 bg-gray-100 text-gray-800 text-sm font-medium rounded-full flex items-center gap-2">
-                <User className="w-4 h-4" />
-                <span className="truncate">{currentUsername}</span>
-              </div>
-            )}
-          </div>
-        )}
-      </header>
+      {/*Header*/}
+      <Header openPage={openPage} currentUsername={currentUsername} userMenuOpen={userMenuOpen} 
+      setUserMenuOpen={setUserMenuOpen} menuOpen={menuOpen} setMenuOpen={setMenuOpen} isLoginPage={page === 'login'} />
 
       <main className="pt-20">
         {renderPage()}
