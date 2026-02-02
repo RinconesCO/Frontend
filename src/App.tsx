@@ -10,7 +10,7 @@ import oldImg from './Sources/Old.jpg';
 import imgInicio from './Sources/imgInicio.jpg';
 import spot1 from './Sources/Spot1.jpeg';
 import spot2 from './Sources/Spot2.jpeg';
-import { AuthProvider, useAuth } from './login/Authcontext';
+import { AuthProvider, useAuth } from './login/AuthContext';
 import LoginComponent from './login/login-component';
 import UserProfile from './login/UserProfile';
 import { FiLogOut, FiUser } from 'react-icons/fi';
@@ -202,20 +202,39 @@ function AppContent() {
 
           {/* QUINTA seccion con tres imagenes en fila */}
           <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="rounded-2xl overflow-hidden">
-                <img src={fashionModelImg} alt="Sustainable" className="w-full h-56 object-cover" />
-              </div>
+  <div className="flex gap-6 overflow-x-auto scroll-smooth">
+    
+    <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={fashionModelImg} alt="Sustainable" className="w-full h-56 object-cover" />
+    </div>
 
-              <div className="rounded-2xl overflow-hidden">
-                <img src={imgInicio} alt="Premium Quality" className="w-full h-56 object-cover" />
-              </div>
+    <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={imgInicio} alt="Premium Quality" className="w-full h-56 object-cover" />
+    </div>
 
-              <div className="rounded-2xl overflow-hidden">
-                <img src={fashionModelImg} alt="Timeless Design" className="w-full h-56 object-cover" />
-              </div>
-            </div>
-          </section>
+    <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={fashionModelImg} alt="Timeless Design" className="w-full h-56 object-cover" />
+    </div>
+
+    <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={imgInicio} alt="Premium Quality" className="w-full h-56 object-cover" />
+    </div>
+
+     <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={fashionModelImg} alt="Timeless Design" className="w-full h-56 object-cover" />
+    </div>
+    
+    <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={imgInicio} alt="Premium Quality" className="w-full h-56 object-cover" />
+    </div>
+
+     <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={fashionModelImg} alt="Timeless Design" className="w-full h-56 object-cover" />
+    </div>
+
+  </div>
+</section>
+
         </>
       );
     }
@@ -365,7 +384,7 @@ function AppContent() {
               alt="Old"
               className="absolute inset-0 w-full h-full object-cover object-[center_40%]"
             />
-            <div className="absolute inset-0 bg-gray-900/60"></div>
+           
             <div className="absolute inset-0 flex items-center justify-center">
               <p className="display-font w-full text-center text-white text-5xl md:text-7xl leading-none px-6">
                 Estilo real, nacido en Bogotá.
