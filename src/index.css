@@ -56,7 +56,7 @@ html.dark body {
 /* Elementos de la barra de navegacion en modo claro dentro del modo oscuro */ 
 .dark .no-dark {
 	background-color: rgba(255, 255, 255, 0.9) !important;
-	border-bottom-color: #facc15 !important;
+	border-bottom-color: #000000 !important;
 }
 
 .dark .no-dark * {

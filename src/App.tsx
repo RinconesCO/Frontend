@@ -1,5 +1,3 @@
-import { Menu, User } from 'lucide-react';
-import DarkModeToggle from './components/DarkModeToggle';
 import { useState, useEffect, useRef } from 'react';
 import Loader from './components/Loader';
 import OutfitsPage from './pages/OutfitsPage';
@@ -12,13 +10,16 @@ import spot1 from './Sources/Spot1.jpeg';
 import spot2 from './Sources/Spot2.jpeg';
 import { AuthProvider, useAuth } from './login/AuthContext';
 import LoginComponent from './login/login-component';
-import UserProfile from './login/UserProfile';
-import { FiLogOut, FiUser } from 'react-icons/fi';
+import Header from './components/Header';
+import CoverflowCarousel from './components/CoverflowCarousel';
 
 function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [page, setPage] = useState<'home' | 'outfits' | 'places' | 'brands' | 'login' | 'profile'>('home');
   const [isLoading, setIsLoading] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+
   const loadingTimer = useRef<number | null>(null);
 
   // Usar el hook de autenticación
@@ -26,12 +27,13 @@ function AppContent() {
 
   const openPage = (p: 'login' | 'home' | 'outfits' | 'places' | 'brands' | 'profile') => {
     setMenuOpen(false);
+    setPage(p);
+    // show loader briefly during page transition
     try {
       if (loadingTimer.current) window.clearTimeout(loadingTimer.current);
     } catch (_) { }
     setIsLoading(true);
     loadingTimer.current = window.setTimeout(() => {
-      setPage(p);
       setIsLoading(false);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 450);
@@ -55,6 +57,7 @@ function AppContent() {
     openPage('home');
   };
 
+
   const renderPage = () => {
     // Si está en la página de perfil, mostrar UserProfile
     if (page === 'profile') {
@@ -66,6 +69,8 @@ function AppContent() {
     }
 
     if (page === 'home') {
+      const carouselImages = [fashionModelImg, spot1, spot2, imgInicio, oldImg];
+
       return (
         <>
           {/* HERO: Bienvenida a Museo Rolo */}
@@ -102,6 +107,10 @@ function AppContent() {
               <div className="mt-6 text-xs text-gray-200 uppercase tracking-wider">Bogotá • Fotografía • Estilo</div>
             </div>
           </section>
+
+          {/* CARRUSEL tipo coverflow - debajo de la primera sección */}
+          <CoverflowCarousel images={carouselImages} />
+
 
           {/* SEGUNDA seccion a la derecha */}
           <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
@@ -370,6 +379,9 @@ function AppContent() {
           )}
         </header>
       )}
+      {/*Header*/}
+      <Header openPage={openPage} currentUsername={currentUsername} userMenuOpen={userMenuOpen} 
+      setUserMenuOpen={setUserMenuOpen} menuOpen={menuOpen} setMenuOpen={setMenuOpen} isLoginPage={page === 'login'} />
 
       <main className={page !== 'profile' ? "pt-20" : ""}>
         {renderPage()}
@@ -377,6 +389,7 @@ function AppContent() {
 
       {/* Footer - ocultar en perfil */}
       {page !== 'profile' && (
+      {page === 'home' && (
         <footer className="mt-20">
           <div className="w-full h-48 md:h-64 relative overflow-hidden">
             <img
