@@ -7,15 +7,15 @@ export const brandsData = [
     name: 'Local Studio',
     category: 'Sustainable Fashion',
     description: 'Colombian brand specializing in sustainable and ethical clothing, 100% local production.',
-    location: 'Chapinero, Bogotá',
+    location: 'Colombia',
     featured: true
   },
   {
     id: 2,
     name: 'Urban Threads',
     category: 'Street Wear',
-    description: 'Urban clothing inspired by Bogota culture and the city’s street art.',
-    location: 'La Candelaria, Bogotá',
+    description: 'Urban clothing inspired by Colombian culture and the country’s street art.',
+    location: 'Colombia',
     featured: true
   },
   {
@@ -23,7 +23,7 @@ export const brandsData = [
     name: 'Atelier 93',
     category: 'High Fashion',
     description: 'Exclusive high fashion designs with European and Colombian influences.',
-    location: 'Zona T, Bogotá',
+    location: 'Colombia',
     featured: false
   },
   {
@@ -31,15 +31,15 @@ export const brandsData = [
     name: 'Verde Moda',
     category: 'Eco Fashion',
     description: 'Garments made with recycled materials and environmentally friendly processes.',
-    location: 'Usaquén, Bogotá',
+    location: 'Colombia',
     featured: false
   },
   {
     id: 5,
-    name: 'Bogotá Vintage',
+    name: 'Colombia Vintage',
     category: 'Vintage & Retro',
     description: 'Carefully curated vintage clothing from past decades with a modern touch.',
-    location: 'Quinta Camacho, Bogotá',
+    location: 'Colombia',
     featured: false
   },
   {
@@ -47,7 +47,7 @@ export const brandsData = [
     name: 'Minimal CO',
     category: 'Minimalist',
     description: 'Minimalist essentials with clean cuts and neutral colors.',
-    location: 'Centro Internacional, Bogotá',
+    location: 'Colombia',
     featured: true
   }
 ];

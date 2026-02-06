@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FiMail, FiLock, FiAtSign, FiUser, FiEye, FiEyeOff, FiPhone, FiPower } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { FaInstagram } from 'react-icons/fa';
-import { useAuth } from './Authcontext';
+import { useAuth } from '../login/AuthContext';
 
 const backgroundImages = [
   'src/Sources/imgInicio.jpg',
@@ -124,7 +124,7 @@ export default function LoginComponent() {
           {/* HEADER */}
           <div className="text-center mb-8">
             <h1 className="font-display text-4xl font-bold uppercase text-[#0D1B2A] dark:text-white">
-              BOGOSPOTS
+              COLSPOTS
             </h1>
 
             <h2 className="text-2xl font-bold mt-6 text-[#0D1B2A] dark:text-zinc-100">
@@ -132,7 +132,7 @@ export default function LoginComponent() {
             </h2>
 
             <p className="text-sm mt-2 text-zinc-500 dark:text-zinc-400">
-              Descubre los mejores sitios de moda en Bogotá.
+              Descubre los mejores sitios de moda en Colombia.
             </p>
           </div>
 

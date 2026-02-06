@@ -3,7 +3,7 @@ import {
     FiCamera, FiEdit2, FiInstagram, FiSave, FiX,
     FiMapPin, FiCalendar, FiMail, FiPhone, FiLogOut, FiUser, FiHome
 } from 'react-icons/fi';
-import { useAuth } from './Authcontext';
+import { useAuth } from '../login/AuthContext';
 
 export default function UserProfile() {
     const { user: authUser, updateUser, logout } = useAuth();
@@ -22,7 +22,7 @@ export default function UserProfile() {
         coverImage: authUser?.coverImage || '',
         photos: authUser?.photos || [],
         joinedDate: authUser?.joinedDate || new Date().toISOString(),
-        location: authUser?.location || 'Bogotá, Colombia'
+        location: authUser?.location || 'Colombia'
     });
 
     const [editData, setEditData] = useState({ ...userData });
@@ -41,7 +41,7 @@ export default function UserProfile() {
                 coverImage: authUser.coverImage || '',
                 photos: authUser.photos || [],
                 joinedDate: authUser.joinedDate,
-                location: authUser.location || 'Bogotá, Colombia'
+                location: authUser.location || 'Colombia'
             };
             setUserData(newData);
             setEditData(newData);
@@ -104,7 +104,7 @@ export default function UserProfile() {
                         </button>
 
                         <h1 className="font-display text-xl sm:text-2xl font-bold uppercase text-[#0D1B2A] dark:text-white">
-                            BOGOSPOTS
+                            COLSPOTS
                         </h1>
                     </div>
 

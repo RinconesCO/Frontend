@@ -9,7 +9,7 @@ export default function OutfitsPage({ openPage }: { openPage: (p: PageName) => v
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-4xl font-bold mb-2">Outfits</h2>
-          <p className="text-gray-600">Descubre los mejores looks urbanos de Bogotá</p>
+          <p className="text-gray-600">Descubre los mejores looks urbanos de Colombia</p>
         </div>
         <button className="text-sm text-gray-600 hover:text-gray-900 font-medium" onClick={() => openPage('home')}>← Volver</button>
       </div>

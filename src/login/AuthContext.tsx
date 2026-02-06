@@ -81,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 coverImage: '',
                 photos: [],
                 joinedDate: new Date().toISOString(),
-                location: 'Bogotá, Colombia'
+                location: 'Colombia'
             };
 
             // Guardar en "base de datos" (localStorage)

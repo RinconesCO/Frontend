@@ -9,7 +9,7 @@ export default function PlacesPage({ openPage }: { openPage: (p: PageName) => vo
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-4xl font-bold mb-2">Places</h2>
-          <p className="text-gray-600">Top spots in Bogotá for your fashion photoshoots</p>
+          <p className="text-gray-600">Top spots in Colombia for your fashion photoshoots</p>
         </div>
         <button className="text-sm text-gray-600 hover:text-gray-900 font-medium" onClick={() => openPage('home')}>← Volver</button>
       </div>

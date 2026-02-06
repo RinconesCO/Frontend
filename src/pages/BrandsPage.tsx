@@ -9,7 +9,7 @@ export default function BrandsPage({ openPage }: { openPage: (p: PageName) => vo
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-4xl font-bold mb-2">Brands</h2>
-          <p className="text-gray-600">Local brands that shape Bogota's fashion scene</p>
+          <p className="text-gray-600">Local brands that shape Colombia's fashion scene</p>
         </div>
         <button className="text-sm text-gray-600 hover:text-gray-900 font-medium" onClick={() => openPage('home')}>← Volver</button>
       </div>

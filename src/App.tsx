@@ -99,7 +99,7 @@ function AppContent() {
                 </button>
               </div>
 
-              <div className="mt-6 text-xs text-gray-200 uppercase tracking-wider">Bogotá • Fotografía • Estilo</div>
+              <div className="mt-6 text-xs text-gray-200 uppercase tracking-wider">Colombia • Fotografía • Estilo</div>
             </div>
           </section>
 
@@ -108,23 +108,23 @@ function AppContent() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                 <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight display-font">
-                  Bogotá<br />
-                  La capital<br />
-                  de la moda
+                  Colombia<br />
+                    Un país<br />
+                    de la moda
                 </h2>
 
                 <p className="text-lg text-gray-600 max-w-md leading-relaxed">
-                  Descrubre las mejores ubicaciones para sesiones de fotos de moda en Bogotá.
-                  Desde barrios vibrantes hasta paisajes urbanos icónicos, encuentra el escenario perfecto para tu próxima sesión.
+                  Descrubre las mejores ubicaciones para sesiones de fotos de moda en Colombia.
+                  Desde ciudades vibrantes hasta paisajes naturales icónicos, encuentra el escenario perfecto para tu próxima sesión.
                 </p>
 
                 <div className="pt-8 space-y-2 text-xs text-gray-400 leading-relaxed">
                   <p className="uppercase tracking-wider">
-                    MODA • CALIDAD • MADE IN BOGOTÁ • ESTILO •
+                    MODA • CALIDAD • MADE IN COLOMBIA • ESTILO •
                     UNICO • RARO • DIFERENTE • EXPRESION PERSONAL • FOTOGRAFIA
                   </p>
                   <p className="uppercase tracking-wider">
-                    MODA • CALIDAD • MADE IN BOGOTÁ • ESTILO •
+                    MODA • CALIDAD • MADE IN COLOMBIA • ESTILO •
                     UNICO • RARO • DIFERENTE • EXPRESION PERSONAL • FOTOGRAFIA
                   </p>
                 </div>
@@ -181,8 +181,8 @@ function AppContent() {
                 </h2>
 
                 <p className="text-lg text-gray-600 max-w-md leading-relaxed">
-                  Bogotá no solo es la capital de Colombia, sino tambien un epicentro de moda y estilo en America Latina.
-                  Sus calles vibrantes, arquitectura unica y cultura diversa la convierten en el lugar ideal para sesiones de fotos de moda que capturan la esencia urbana y contemporanea.
+                  Colombia es un epicentro de moda y estilo en América Latina.
+                  Sus ciudades vibrantes, paisajes y cultura diversa la convierten en el lugar ideal para sesiones de fotos de moda que capturan la esencia urbana y contemporánea.
                 </p>
               </div>
             </div>
@@ -279,7 +279,7 @@ function AppContent() {
           <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <div className="flex items-center space-x-12">
               <button onClick={() => openPage('home')} className="text-2xl font-bold tracking-tight display-font">
-                BogoSpots
+                COLSPOTS
               </button>
 
               <div className="hidden md:flex items-center space-x-8">
@@ -387,7 +387,7 @@ function AppContent() {
            
             <div className="absolute inset-0 flex items-center justify-center">
               <p className="display-font w-full text-center text-white text-5xl md:text-7xl leading-none px-6">
-                Estilo real, nacido en Bogotá.
+                Estilo real, nacido en Colombia.
               </p>
             </div>
           </div>

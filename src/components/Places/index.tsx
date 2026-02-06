@@ -36,7 +36,7 @@ export const placesData = [
     id: 4,
     name: 'Monserrate',
     zone: 'Eastern Hills',
-    description: 'Panoramic city views for dramatic shots with the Bogota skyline in the background.',
+    description: 'Panoramic city views for dramatic shots with skyline views from Colombian cities in the background.',
     imageUrl: 'https://images.pexels.com/photos/3214121/pexels-photo-3214121.jpeg?auto=compress&cs=tinysrgb&w=800',
     hours: '8am - 5pm',
     features: ['Panoramic', 'Natural', 'Iconic'],
