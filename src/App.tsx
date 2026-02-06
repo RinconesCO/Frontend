@@ -1,4 +1,4 @@
-import { Menu, User, Circle } from 'lucide-react';
+import { Menu, User } from 'lucide-react';
 import DarkModeToggle from './components/DarkModeToggle';
 import { useState, useEffect, useRef } from 'react';
 import Loader from './components/Loader';
@@ -10,25 +10,26 @@ import oldImg from './Sources/Old.jpg';
 import imgInicio from './Sources/imgInicio.jpg';
 import spot1 from './Sources/Spot1.jpeg';
 import spot2 from './Sources/Spot2.jpeg';
+import { AuthProvider, useAuth } from './login/AuthContext';
 import LoginComponent from './login/login-component';
+import UserProfile from './login/UserProfile';
+import { FiLogOut, FiUser } from 'react-icons/fi';
 
-
-function App() {
+function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [page, setPage] = useState<'home' | 'outfits' | 'places' | 'brands' | 'login'>('home');
-  const [currentUsername, setCurrentUsername] = useState<string | null>(null);
+  const [page, setPage] = useState<'home' | 'outfits' | 'places' | 'brands' | 'login' | 'profile'>('home');
   const [isLoading, setIsLoading] = useState(false);
-
   const loadingTimer = useRef<number | null>(null);
 
-  const openPage = (p: 'login' | 'home' | 'outfits' | 'places' | 'brands') => {
+  // Usar el hook de autenticación
+  const { isAuthenticated, user, logout } = useAuth();
+
+  const openPage = (p: 'login' | 'home' | 'outfits' | 'places' | 'brands' | 'profile') => {
     setMenuOpen(false);
-    // show loader briefly during page transition
     try {
       if (loadingTimer.current) window.clearTimeout(loadingTimer.current);
-    } catch (_) {}
+    } catch (_) { }
     setIsLoading(true);
-    // small delay to simulate loading/transition
     loadingTimer.current = window.setTimeout(() => {
       setPage(p);
       setIsLoading(false);
@@ -42,33 +43,32 @@ function App() {
     };
   }, []);
 
+  // Si el usuario se autentica y está en la página de login, redirigir al perfil
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('bogospots_username');
-      if (saved) setCurrentUsername(saved);
-    } catch (_) {}
+    if (isAuthenticated && page === 'login') {
+      openPage('profile');
+    }
+  }, [isAuthenticated, page]);
 
-    const handler = (e: any) => {
-      try {
-        const u = e?.detail?.username;
-        if (u) setCurrentUsername(String(u));
-      } catch (_) {}
-    };
-
-    window.addEventListener('bogospots:login', handler as EventListener);
-    window.addEventListener('bogospots:logout', () => setCurrentUsername(null));
-    return () => {
-      window.removeEventListener('bogospots:login', handler as EventListener);
-      window.removeEventListener('bogospots:logout', () => setCurrentUsername(null));
-    };
-  }, []);
+  const handleLogout = () => {
+    logout();
+    openPage('home');
+  };
 
   const renderPage = () => {
+    // Si está en la página de perfil, mostrar UserProfile
+    if (page === 'profile') {
+      if (!isAuthenticated) {
+        openPage('login');
+        return null;
+      }
+      return <UserProfile />;
+    }
+
     if (page === 'home') {
       return (
         <>
-
-          {/* HERO: Bienvenida a Museo Rolo — diseño enriquecido con fondo, overlays y CTA */}
+          {/* HERO: Bienvenida a Museo Rolo */}
           <section className="w-full h-screen relative flex items-center justify-center overflow-hidden">
             <img
               src={imgInicio}
@@ -110,14 +110,13 @@ function App() {
                 <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight display-font">
                   Bogotá<br />
                   La capital<br />
-                  de la moda 
+                  de la moda
                 </h2>
 
                 <p className="text-lg text-gray-600 max-w-md leading-relaxed">
-                  Descrubre las mejores ubicaciones para sesiones de fotos de moda en Bogotá. 
+                  Descrubre las mejores ubicaciones para sesiones de fotos de moda en Bogotá.
                   Desde barrios vibrantes hasta paisajes urbanos icónicos, encuentra el escenario perfecto para tu próxima sesión.
                 </p>
-                
 
                 <div className="pt-8 space-y-2 text-xs text-gray-400 leading-relaxed">
                   <p className="uppercase tracking-wider">
@@ -152,7 +151,6 @@ function App() {
             </div>
           </section>
 
-
           {/* TERCERA seccion a la izquierda */}
           <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -179,20 +177,18 @@ function App() {
                 <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight display-font">
                   Lugares<br />
                   Chimbas<br />
-                  Para tus fotos 
+                  Para tus fotos
                 </h2>
 
                 <p className="text-lg text-gray-600 max-w-md leading-relaxed">
                   Bogotá no solo es la capital de Colombia, sino tambien un epicentro de moda y estilo en America Latina.
                   Sus calles vibrantes, arquitectura unica y cultura diversa la convierten en el lugar ideal para sesiones de fotos de moda que capturan la esencia urbana y contemporanea.
                 </p>
-                
               </div>
             </div>
           </section>
 
-
-          {/* CUARTA seccion con una imagen estirada de lado a lado y debajo un texto  */}
+          {/* CUARTA seccion con una imagen estirada de lado a lado */}
           <section className="w-full relative overflow-hidden">
             <div className="absolute inset-0 w-full h-64 md:h-[420px] lg:h-[560px]">
               <img src={imgInicio} alt="Inicio" className="w-full h-full object-cover object-center" />
@@ -206,20 +202,39 @@ function App() {
 
           {/* QUINTA seccion con tres imagenes en fila */}
           <section className="max-w-7xl mx-auto px-6 py-12 md:py-20">
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="rounded-2xl overflow-hidden">
-                <img src={fashionModelImg} alt="Sustainable" className="w-full h-56 object-cover" />
-              </div>
+  <div className="flex gap-6 overflow-x-auto scroll-smooth">
+    
+    <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={fashionModelImg} alt="Sustainable" className="w-full h-56 object-cover" />
+    </div>
 
-              <div className="rounded-2xl overflow-hidden">
-                <img src={imgInicio} alt="Premium Quality" className="w-full h-56 object-cover" />
-              </div>
+    <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={imgInicio} alt="Premium Quality" className="w-full h-56 object-cover" />
+    </div>
 
-              <div className="rounded-2xl overflow-hidden">
-                <img src={fashionModelImg} alt="Timeless Design" className="w-full h-56 object-cover" />
-              </div>
-            </div>
-          </section>
+    <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={fashionModelImg} alt="Timeless Design" className="w-full h-56 object-cover" />
+    </div>
+
+    <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={imgInicio} alt="Premium Quality" className="w-full h-56 object-cover" />
+    </div>
+
+     <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={fashionModelImg} alt="Timeless Design" className="w-full h-56 object-cover" />
+    </div>
+    
+    <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={imgInicio} alt="Premium Quality" className="w-full h-56 object-cover" />
+    </div>
+
+     <div className="min-w-[280px] md:min-w-[350px] rounded-2xl overflow-hidden flex-shrink-0">
+      <img src={fashionModelImg} alt="Timeless Design" className="w-full h-56 object-cover" />
+    </div>
+
+  </div>
+</section>
+
         </>
       );
     }
@@ -237,12 +252,12 @@ function App() {
     }
 
     if (page === 'login') {
-  return (
-    <section className="min-h-[70vh] flex items-center justify-center">
-      <LoginComponent />
-    </section>
-  );
-}
+      return (
+        <section className="min-h-[70vh] flex items-center justify-center">
+          <LoginComponent />
+        </section>
+      );
+    }
 
     return null;
   };
@@ -250,78 +265,126 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50 overflow-hidden relative z-0">
       {isLoading && <Loader />}
-      {page !== 'login' && (
+
+      {/* Fondo de letras chinas - ocultar en perfil */}
+      {page !== 'login' && page !== 'profile' && (
         <div className="bg-giant-word display-font" aria-hidden="true">
           太 棒 了
         </div>
       )}
-      <header className="no-dark fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
-        <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-12">
-            <button onClick={() => openPage('home')} className="text-2xl font-bold tracking-tight display-font">BogoSpots</button>
 
-            <div className="hidden md:flex items-center space-x-8">
-              <button onClick={() => openPage('outfits')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
-                Outfits
+      {/* Header - mostrar siempre excepto cuando esté en la página de perfil autenticado */}
+      {!(page === 'profile' && isAuthenticated) && (
+        <header className="no-dark fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+          <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center space-x-12">
+              <button onClick={() => openPage('home')} className="text-2xl font-bold tracking-tight display-font">
+                BogoSpots
               </button>
-              <button onClick={() => openPage('places')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
-                Places
-              </button>
-              <button onClick={() => openPage('brands')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
-                Brands
+
+              <div className="hidden md:flex items-center space-x-8">
+                <button onClick={() => openPage('outfits')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
+                  Outfits
+                </button>
+                <button onClick={() => openPage('places')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
+                  Places
+                </button>
+                <button onClick={() => openPage('brands')} className="text-sm font-medium text-gray-700 hover:text-gray-900 transition">
+                  Brands
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <DarkModeToggle />
+
+              {/* Si el usuario está autenticado, mostrar botón de perfil */}
+              {isAuthenticated && user ? (
+                <>
+                  <button
+                    onClick={() => openPage('profile')}
+                    className="hidden md:flex items-center gap-3 px-4 py-2 bg-gray-100 text-gray-800 text-sm font-medium rounded-full transition hover:bg-gray-200"
+                  >
+                    <User className="w-4 h-4" />
+                    <span className="font-medium">{user.firstName} {user.lastName}</span>
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="hidden md:flex items-center gap-2 px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-full transition hover:bg-red-600"
+                    title="Cerrar sesión"
+                  >
+                    <FiLogOut size={16} />
+                  </button>
+                </>
+              ) : (
+                <button
+                  title="Sign in"
+                  onClick={() => openPage('login')}
+                  className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition"
+                >
+                  <User className="w-5 h-5" />
+                </button>
+              )}
+
+              <button
+                className="md:hidden p-2"
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                <Menu className="w-6 h-6" />
               </button>
             </div>
-          </div>
+          </nav>
 
-          <div className="flex items-center space-x-4">
-            <DarkModeToggle />
-            {currentUsername && (
-              <button className="hidden md:flex items-center gap-3 px-4 py-2 bg-gray-100 text-gray-800 text-sm font-medium rounded-full transition">
-                <User className="w-4 h-4" />
-                <span className="font-medium">{currentUsername}</span>
+          {/* Mobile Menu */}
+          {menuOpen && (
+            <div className="no-dark md:hidden bg-white border-t border-gray-200 px-6 py-4 space-y-3">
+              <button onClick={() => openPage('outfits')} className="block text-sm font-medium text-gray-700 text-left w-full">
+                Outfits
               </button>
-            )}
+              <button onClick={() => openPage('places')} className="block text-sm font-medium text-gray-700 text-left w-full">
+                Places
+              </button>
+              <button onClick={() => openPage('brands')} className="block text-sm font-medium text-gray-700 text-left w-full">
+                Brands
+              </button>
 
-            <button title="Sign in" onClick={() => openPage('login')} className="p-2 rounded-full border border-gray-300 hover:border-gray-400 transition">
-              <User className="w-5 h-5" />
-            </button>
-            <button
-              className="md:hidden p-2"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-          </div>
-        </nav>
+              {isAuthenticated && user && (
+                <>
+                  <button
+                    onClick={() => openPage('profile')}
+                    className="w-full px-6 py-2 bg-gray-100 text-gray-800 text-sm font-medium rounded-full flex items-center gap-2"
+                  >
+                    <User className="w-4 h-4" />
+                    <span className="truncate">{user.firstName} {user.lastName}</span>
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full px-6 py-2 bg-red-500 text-white text-sm font-medium rounded-full flex items-center gap-2"
+                  >
+                    <FiLogOut size={16} />
+                    <span>Cerrar sesión</span>
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </header>
+      )}
 
-        {menuOpen && (
-          <div className="no-dark md:hidden bg-white border-t border-gray-200 px-6 py-4 space-y-3">
-            <button onClick={() => openPage('outfits')} className="block text-sm font-medium text-gray-700 text-left w-full">Outfits</button>
-            <button onClick={() => openPage('places')} className="block text-sm font-medium text-gray-700 text-left w-full">Places</button>
-            <button onClick={() => openPage('brands')} className="block text-sm font-medium text-gray-700 text-left w-full">Brands</button>
-            {currentUsername && (
-              <div className="w-full px-6 py-2 bg-gray-100 text-gray-800 text-sm font-medium rounded-full flex items-center gap-2">
-                <User className="w-4 h-4" />
-                <span className="truncate">{currentUsername}</span>
-              </div>
-            )}
-          </div>
-        )}
-      </header>
-
-      <main className="pt-20">
+      <main className={page !== 'profile' ? "pt-20" : ""}>
         {renderPage()}
       </main>
 
-        
+      {/* Footer - ocultar en perfil */}
+      {page !== 'profile' && (
         <footer className="mt-20">
           <div className="w-full h-48 md:h-64 relative overflow-hidden">
-            <img 
-              src={oldImg} 
-              alt="Old" 
-              className="absolute inset-0 w-full h-full object-cover object-[center_40%]" 
+            <img
+              src={oldImg}
+              alt="Old"
+              className="absolute inset-0 w-full h-full object-cover object-[center_40%]"
             />
-            <div className="absolute inset-0 bg-gray-900/60"></div>
+           
             <div className="absolute inset-0 flex items-center justify-center">
               <p className="display-font w-full text-center text-white text-5xl md:text-7xl leading-none px-6">
                 Estilo real, nacido en Bogotá.
@@ -329,8 +392,16 @@ function App() {
             </div>
           </div>
         </footer>
+      )}
     </div>
   );
 }
 
-export default App;
+// Componente principal que envuelve todo con AuthProvider
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+}

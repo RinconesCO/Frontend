@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FiMail, FiLock, FiAtSign, FiUser, FiEye, FiEyeOff, FiPhone, FiPower } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { FaInstagram } from 'react-icons/fa';
-import useAuthForm from './useAuthForm';
+import { useAuth } from './Authcontext';
 
 const backgroundImages = [
   'src/Sources/imgInicio.jpg',
@@ -18,28 +18,77 @@ const backgroundImages = [
 export default function LoginComponent() {
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    username,
-    setUsername,
-    firstName,
-    setFirstName,
-    lastName,
-    setLastName,
-    phone,
-    setPhone,
-    confirmPassword,
-    setConfirmPassword,
-    loading,
-    error,
-    success,
-    handleSubmit,
-  } = useAuthForm(mode, { onRegisterSuccess: () => setMode('login') });
+  // Estados del formulario
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
+  const { login, register } = useAuth();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    setLoading(true);
+
+    try {
+      if (mode === 'login') {
+        // Validaciones básicas
+        if (!email || !password) {
+          throw new Error('Por favor completa todos los campos');
+        }
+
+        await login(email, password);
+        // Si el login es exitoso, el App.tsx redirigirá automáticamente al perfil
+      } else {
+        // Validaciones para registro
+        if (!username || !firstName || !lastName || !email || !password) {
+          throw new Error('Por favor completa todos los campos obligatorios');
+        }
+
+        if (password !== confirmPassword) {
+          throw new Error('Las contraseñas no coinciden');
+        }
+
+        if (password.length < 6) {
+          throw new Error('La contraseña debe tener al menos 6 caracteres');
+        }
+
+        await register({
+          username,
+          firstName,
+          lastName,
+          email,
+          phone,
+          password,
+        });
+
+        setSuccess('¡Cuenta creada exitosamente! Ahora puedes iniciar sesión.');
+        setMode('login');
+
+        // Limpiar formulario
+        setUsername('');
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setPhone('');
+        setPassword('');
+        setConfirmPassword('');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Ocurrió un error. Intenta nuevamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="relative min-h-screen bg-background-light dark:bg-background-dark overflow-hidden flex items-center justify-center">
@@ -101,6 +150,7 @@ export default function LoginComponent() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
+                    required
                   />
                 </div>
 
@@ -112,6 +162,7 @@ export default function LoginComponent() {
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
+                    required
                   />
                 </div>
 
@@ -123,6 +174,7 @@ export default function LoginComponent() {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
+                    required
                   />
                 </div>
 
@@ -148,6 +200,7 @@ export default function LoginComponent() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
+                required
               />
             </div>
 
@@ -161,6 +214,7 @@ export default function LoginComponent() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-11 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
+                required
               />
 
               <button
@@ -182,6 +236,7 @@ export default function LoginComponent() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg pl-11 pr-4 py-3 outline-none text-sm text-zinc-700 dark:text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30"
+                  required
                 />
               </div>
             )}
@@ -199,11 +254,24 @@ export default function LoginComponent() {
               </div>
             )}
 
-            {/* BOTÓN */}
-            {error && <div className="text-sm text-red-500">{error}</div>}
-            {success && <div className="text-sm text-green-600">{success}</div>}
+            {/* MENSAJES */}
+            {error && (
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3 text-sm text-red-600 dark:text-red-400">
+                {error}
+              </div>
+            )}
+            {success && (
+              <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-3 text-sm text-emerald-600 dark:text-emerald-400">
+                {success}
+              </div>
+            )}
 
-            <button disabled={loading} className="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 transition hover:scale-[1.02] active:scale-95 disabled:opacity-60">
+            {/* BOTÓN */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 transition hover:scale-[1.02] active:scale-95 disabled:opacity-60"
+            >
               {loading ? 'Procesando...' : (mode === 'login' ? 'Iniciar sesión' : 'Registrarse')}
             </button>
 
@@ -215,28 +283,32 @@ export default function LoginComponent() {
             </div>
 
             <div className="flex justify-center gap-6">
-              <button className="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:scale-105 transition">
+              <button type="button" className="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:scale-105 transition">
                 <FcGoogle size={22} />
               </button>
 
-              <button className="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:scale-105 transition">
+              <button type="button" className="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:scale-105 transition">
                 <FaInstagram size={22} className="text-pink-500" />
               </button>
 
-              <button className="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:scale-105 transition">
+              <button type="button" className="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:scale-105 transition">
                 <FiAtSign size={22} />
               </button>
             </div>
           </form>
 
           {/* FOOTER */}
-            <p className="mt-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
+          <p className="mt-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
             {mode === 'login' ? (
               <>
                 ¿No tienes cuenta?{' '}
                 <span
                   className="text-primary font-bold cursor-pointer"
-                  onClick={() => setMode('register')}
+                  onClick={() => {
+                    setMode('register');
+                    setError('');
+                    setSuccess('');
+                  }}
                 >
                   Crear cuenta
                 </span>
@@ -246,7 +318,11 @@ export default function LoginComponent() {
                 ¿Ya tienes cuenta?{' '}
                 <span
                   className="text-primary font-bold cursor-pointer"
-                  onClick={() => setMode('login')}
+                  onClick={() => {
+                    setMode('login');
+                    setError('');
+                    setSuccess('');
+                  }}
                 >
                   Iniciar sesión
                 </span>
