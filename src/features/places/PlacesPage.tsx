@@ -18,7 +18,6 @@ export default function PlacesPage({ openPage }: { openPage: (p: PageName) => vo
         {placesData.map((place) => (
           <PlaceCard
             key={place.id}
-            id={place.id}
             name={place.name}
             zone={place.zone}
             description={place.description}

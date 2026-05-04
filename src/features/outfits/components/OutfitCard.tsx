@@ -1,14 +1,13 @@
 import React from 'react';
 
 interface OutfitCardProps {
-  id: number;
   imageUrl: string;
   title: string;
   description: string;
   tags?: string[];
 }
 
-const OutfitCard: React.FC<OutfitCardProps> = ({ id, imageUrl, title, description, tags }) => {
+const OutfitCard: React.FC<OutfitCardProps> = ({ imageUrl, title, description, tags }) => {
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
       <div className="relative overflow-hidden group">

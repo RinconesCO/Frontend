@@ -18,7 +18,6 @@ export default function OutfitsPage({ openPage }: { openPage: (p: PageName) => v
         {outfitsData.map((outfit) => (
           <OutfitCard
             key={outfit.id}
-            id={outfit.id}
             imageUrl={outfit.imageUrl}
             title={outfit.title}
             description={outfit.description}

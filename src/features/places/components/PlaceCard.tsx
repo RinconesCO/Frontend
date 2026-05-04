@@ -1,8 +1,7 @@
 import React from 'react';
-import { MapPin, Camera, Clock } from 'lucide-react';
+import { Camera, Clock } from 'lucide-react';
 
 interface PlaceCardProps {
-  id: number;
   name: string;
   zone: string;
   description: string;
