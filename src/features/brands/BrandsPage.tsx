@@ -1,5 +1,5 @@
-import BrandCard from '../components/Brands/BrandCard';
-import { brandsData } from '../components/Brands';
+import BrandCard from './components/BrandCard';
+import { brandsData } from './data';
 
 type PageName = 'login' | 'home' | 'outfits' | 'places' | 'brands';
 

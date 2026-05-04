@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { FiMail, FiLock, FiAtSign, FiUser, FiEye, FiEyeOff, FiPhone, FiPower } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { FaInstagram } from 'react-icons/fa';
-import { useAuth } from './Authcontext';
+import { useAuth } from './AuthContext';
 
 const backgroundImages = [
-  'src/Sources/imgInicio.jpg',
-  'src/Sources/fashion-model-bogota.jpg',
-  'src/Sources/imgInicio.jpg',
-  'src/Sources/fashion-model-bogota.jpg',
-  'src/Sources/imgInicio.jpg',
-  'src/Sources/fashion-model-bogota.jpg',
-  'src/Sources/imgInicio.jpg',
-  'src/Sources/fashion-model-bogota.jpg',
+  'src/assets/images/imgInicio.jpg',
+  'src/assets/images/fashion-model-bogota.jpg',
+  'src/assets/images/imgInicio.jpg',
+  'src/assets/images/fashion-model-bogota.jpg',
+  'src/assets/images/imgInicio.jpg',
+  'src/assets/images/fashion-model-bogota.jpg',
+  'src/assets/images/imgInicio.jpg',
+  'src/assets/images/fashion-model-bogota.jpg',
 ];
 
 export default function LoginComponent() {

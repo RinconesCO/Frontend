@@ -1,5 +1,5 @@
-import OutfitCard from '../components/Outfits/OutfitCard';
-import { outfitsData } from '../components/Outfits';
+import OutfitCard from './components/OutfitCard';
+import { outfitsData } from './data';
 
 type PageName = 'login' | 'home' | 'outfits' | 'places' | 'brands';
 

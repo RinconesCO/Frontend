@@ -1,5 +1,5 @@
-import PlaceCard from '../components/Places/PlaceCard';
-import { placesData } from '../components/Places';
+import PlaceCard from './components/PlaceCard';
+import { placesData } from './data';
 
 type PageName = 'login' | 'home' | 'outfits' | 'places' | 'brands';
 

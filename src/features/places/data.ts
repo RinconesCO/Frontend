@@ -1,5 +1,3 @@
-import PlaceCard from './PlaceCard';
-
 // Example data for places (English keys)
 export const placesData = [
   {
@@ -63,5 +61,3 @@ export const placesData = [
     bestHour: 'Midday (12-2pm)'
   }
 ];
-
-export default PlaceCard;

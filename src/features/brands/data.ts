@@ -1,5 +1,3 @@
-import BrandCard from './BrandCard';
-
 // Example data for brands (English keys)
 export const brandsData = [
   {
@@ -14,7 +12,7 @@ export const brandsData = [
     id: 2,
     name: 'Urban Threads',
     category: 'Street Wear',
-    description: 'Urban clothing inspired by Bogota culture and the city’s street art.',
+    description: "Urban clothing inspired by Bogota culture and the city's street art.",
     location: 'La Candelaria, Bogotá',
     featured: true
   },
@@ -51,5 +49,3 @@ export const brandsData = [
     featured: true
   }
 ];
-
-export default BrandCard;

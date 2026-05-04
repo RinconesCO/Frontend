@@ -1,5 +1,3 @@
-import OutfitCard from './OutfitCard';
-
 // Example data for outfits
 export const outfitsData = [
   {
@@ -45,5 +43,3 @@ export const outfitsData = [
     tags: ['Formal', 'Executive', 'Elegant']
   }
 ];
-
-export default OutfitCard;

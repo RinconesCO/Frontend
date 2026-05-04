@@ -3,12 +3,13 @@ import {
     FiCamera, FiEdit2, FiInstagram, FiSave, FiX,
     FiMapPin, FiCalendar, FiMail, FiPhone, FiLogOut, FiUser, FiHome
 } from 'react-icons/fi';
-import { useAuth } from './Authcontext';
+import { useAuth } from './AuthContext';
+import PhotoCarouselModal from './components/PhotoCarouselModal';
 
 export default function UserProfile() {
     const { user: authUser, updateUser, logout } = useAuth();
     const [isEditing, setIsEditing] = useState(false);
-    const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
+    const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
 
     const [userData, setUserData] = useState({
         username: authUser?.username || '',
@@ -370,7 +371,7 @@ export default function UserProfile() {
                                 <div
                                     key={index}
                                     className="relative aspect-square rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 group cursor-pointer"
-                                    onClick={() => setSelectedPhoto(photo)}
+                                    onClick={() => setSelectedPhotoIndex(index)}
                                 >
                                     <img
                                         src={photo}
@@ -405,26 +406,15 @@ export default function UserProfile() {
 
             </div>
 
-            {/* PHOTO MODAL */}
-            {selectedPhoto && (
-                <div
-                    className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
-                    onClick={() => setSelectedPhoto(null)}
-                >
-                    <button
-                        onClick={() => setSelectedPhoto(null)}
-                        className="absolute top-4 sm:top-6 right-4 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
-                    >
-                        <FiX size={24} />
-                    </button>
-
-                    <img
-                        src={selectedPhoto}
-                        alt="Vista ampliada"
-                        className="max-w-full max-h-[90vh] object-contain rounded-2xl"
-                        onClick={(e) => e.stopPropagation()}
-                    />
-                </div>
+            {/* PHOTO CAROUSEL MODAL */}
+            {selectedPhotoIndex !== null && (
+                <PhotoCarouselModal
+                    photos={editData.photos}
+                    selectedIndex={selectedPhotoIndex}
+                    isOpen={true}
+                    onClose={() => setSelectedPhotoIndex(null)}
+                    onNavigate={(index) => setSelectedPhotoIndex(index)}
+                />
             )}
         </div>
     );
